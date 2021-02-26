@@ -1,0 +1,72 @@
+h1 {
+    color: navy;
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+}
+
+.container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+.sign-up-container {
+    display: flex;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+}
+
+.sign-in-container {
+    display: flex;
+    width: 50%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay-container {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0.5) 35%,
+      rgba(0, 0, 0, 0.5) 100%
+    ), url('../assets/images/signup.jpg') center center/cover no-repeat;
+    position: absolute;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: all 2s ease;
+    z-index: 1;
+  }
+
+.overlay-container.active {
+      left: 50%;
+      transition: all 2s ease;
+      overflow: hidden;
+
+  }
+
+.overlay-panel {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.overlay-btn {
+    color: #fff;
+    position: relative;
+    text-align: center;
+    top: 30%;
+}
