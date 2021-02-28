@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
+import { Link } from "react-router-dom";
 import "./Sign.css";
 
 function Sign() {
@@ -24,7 +25,9 @@ function Sign() {
           <h1>Sign In</h1>
           <Input type="email" placeholder="Enter your email" />
           <Input type="password" placeholder="Enter your password" />
+          <Link to='/home'>
           <Button text="입장" />
+          </Link>
         </form>
       </div>
       <div className={Click ? "overlay-container active" : "overlay-container"}>
