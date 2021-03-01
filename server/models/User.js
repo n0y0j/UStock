@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const { gql } = require("apollo-server");
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const userSchema = mongoose.Schema({
   name: {
@@ -52,16 +54,34 @@ const resolvers = {
   },
   Mutation: {
     register: (parent, args, context, info) => {
-      User.create(
-        {
-          name: args.input.name,
-          email: args.input.email,
-          password: args.input.password,
-        },
-        function (err, user) {
-          if (err) return { success: false };
-        }
-      );
+
+      const newUser = {
+        name: args.input.name,
+        email: args.input.email,
+        password: args.input.password,
+      };
+
+      bcrypt.genSalt(saltRounds, function(err, salt) {
+        if (err) console.log(err);
+
+        bcrypt.hash(args.input.password, salt, function(err, hash) {
+          if (err) console.log(err);
+          args.input.password = hash;
+          
+          User.create(
+            {
+              name: args.input.name,
+              email: args.input.email,
+              password: args.input.password,
+            },
+            function (err, user) {
+              if (err) console.log(err);
+            }
+          );
+        })
+      })
+
+      return newUser;
     },
   },
 };
