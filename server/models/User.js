@@ -29,35 +29,39 @@ const typeDefs = gql`
     name: String!
     email: String!
     password: String!
-    role: Int!
+    role: Int
+  }
+  input registerInput {
+    name: String!
+    email: String!
+    password: String!
   }
 `;
 
 const resolvers = {
   Query: {
     user: async (parent, args, context, info) => {
-        var temp;
-        await User.findById(args.id, function(err, user) {
-            if (err) return { success: false, err: 'block!'}
-            if (!user) return { success: false, err: 'user is empty'}
-            temp = user;
-        })
-        return temp;
-    }
+      var temp;
+      await User.findById(args.id, function (err, user) {
+        if (err) return { success: false, err: "block!" };
+        if (!user) return { success: false, err: "user is empty" };
+        temp = user;
+      });
+      return temp;
+    },
   },
   Mutation: {
     register: (parent, args, context, info) => {
-      User.create({
-        name: args.name,
-        email: args.email,
-        password: args.password,
-        role: args.role,
-      },
-      function(err, user) {
-        if (err) return { success: false }
-        else console.log(user)
-      });
-      return args;
+      User.create(
+        {
+          name: args.input.name,
+          email: args.input.email,
+          password: args.input.password,
+        },
+        function (err, user) {
+          if (err) return { success: false };
+        }
+      );
     },
   },
 };

@@ -10,6 +10,8 @@ const COLOR = ["primary"]
 export const Input = ({
     type,
     placeholder,
+    onChange,
+    value,
     inputStyle,
     inputSize,
     inputColor,
@@ -21,6 +23,6 @@ export const Input = ({
     const checkInputColor = COLOR.includes(inputColor) ? inputColor : COLOR[0];
 
     return (
-        <input className={`inp ${checkInputStyle} ${checkInputSized} ${checkInputColor}`} type={type} placeholder={placeholder} />
+        <input className={`inp ${checkInputStyle} ${checkInputSized} ${checkInputColor}`} type={type} placeholder={placeholder} onChange={onChange} value={value} />
     )
 }

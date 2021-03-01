@@ -2,21 +2,74 @@ import React, { useState } from "react";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { Link } from "react-router-dom";
+import { useMutation, gql } from '@apollo/client'
 import "./Sign.css";
+
+const REGISTER = gql`
+  mutation Register($input: registerInput!) {
+    register(input: $input) {
+      email
+      name
+      password
+    }
+  }
+`
 
 function Sign() {
   const [Click, setClick] = useState(false);
+  const [Email, setEmail] = useState("")
+  const [Name, setName] = useState("")
+  const [Password, setPassword] = useState("")
+  const [RePassword, setRePassword] = useState("")
+  
   const handleClick = () => setClick(!Click);
+
+  const emailChangeHandler = (event) => {
+    setEmail(event.currentTarget.value)
+  }
+
+  const nameChangeHandler = (event) => {
+    setName(event.currentTarget.value)
+  }
+
+  const passwordChangeHandler = (event) => {
+    setPassword(event.currentTarget.value)
+  }
+
+  const rePasswordChangeHandler = (event) => {
+    setRePassword(event.currentTarget.value)
+  }
+  
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    postRegister({
+      variables: {
+        input: {
+          email: Email,
+          name: Name,
+          password: Password
+        },
+      }
+    })
+  
+  }
+
+  const [postRegister] = useMutation(REGISTER, {onCompleted: postRegisterCompleted})
+
+  function postRegisterCompleted(data) {
+    console.log(data)
+    alert(`계정이 생성되었습니다.`)
+  }
 
   return (
     <div className="container">
       <div className="sign-up-container">
-        <form className="form-container">
+        <form className="form-container" onSubmit={handleSubmit}>
           <h1>Sign Up</h1>
-          <Input type="email" placeholder="Enter your email" />
-          <Input type="text" placeholder="Enter your name" />
-          <Input type="password" placeholder="Enter your password" />
-          <Input type="password" placeholder="Enter your password" />
+          <Input type="email" placeholder="Enter your email" onChange={emailChangeHandler} value={Email} />
+          <Input type="text" placeholder="Enter your name" onChange={nameChangeHandler} value={Name} />
+          <Input type="password" placeholder="Enter your password" onChange={passwordChangeHandler} value={Password} />
+          <Input type="password" placeholder="Enter your password"  onChange={rePasswordChangeHandler} value={RePassword}/>
           <Button text="가입" />
         </form>
       </div>
