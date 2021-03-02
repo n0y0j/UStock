@@ -38,6 +38,10 @@ const typeDefs = gql`
     email: String!
     password: String!
   }
+  input loginInput {
+    email: String!
+    password: String!
+  }
 `;
 
 const resolvers = {
@@ -54,7 +58,6 @@ const resolvers = {
   },
   Mutation: {
     register: (parent, args, context, info) => {
-
       const newUser = {
         name: args.input.name,
         email: args.input.email,
@@ -83,6 +86,20 @@ const resolvers = {
 
       return newUser;
     },
+    login: (parent, args, context, info) => {
+      User.findOne({ email: args.input.email }, (err, user) => {
+        if (!user) {
+          console.log("제공된 이메일에 해당하는 유저가 없습니다.")
+        }
+        
+
+        bcrypt.compare(args.input.password, user.password, function (err, isMatch) {
+          if (err) console.log(err)
+          console.log(isMatch);
+        })
+
+      })
+    }
   },
 };
 

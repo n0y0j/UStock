@@ -15,17 +15,32 @@ const REGISTER = gql`
   }
 `
 
+const LOGIN = gql`
+  mutation Login($input: loginInput!) {
+    login(input: $input) {
+      email
+      password
+    }
+  }
+`
+
 function Sign() {
   const [Click, setClick] = useState(false);
   const [Email, setEmail] = useState("")
+  const [Email2, setEmail2] = useState("")
   const [Name, setName] = useState("")
   const [Password, setPassword] = useState("")
+  const [Password2, setPassword2] = useState("")
   const [RePassword, setRePassword] = useState("")
   
   const handleClick = () => setClick(!Click);
 
   const emailChangeHandler = (event) => {
     setEmail(event.currentTarget.value)
+  }
+
+  const email2ChangeHandler = (event) => {
+    setEmail2(event.currentTarget.value)
   }
 
   const nameChangeHandler = (event) => {
@@ -39,19 +54,55 @@ function Sign() {
   const rePasswordChangeHandler = (event) => {
     setRePassword(event.currentTarget.value)
   }
+
+  const password2ChangeHandler = (event) => {
+    setPassword2(event.currentTarget.value)
+  }
+
+
   
-  const handleSubmit = (event) => {
+  const singUpHandleSubmit = (event) => {
     event.preventDefault();
-    postRegister({
+
+    if (Email !== "" && Name !== ""  && Password !== "" && RePassword !== "") {
+      if (Password == RePassword) {
+        postRegister({
+          variables: {
+            input: {
+              email: Email,
+              name: Name,
+              password: Password
+            },
+          }
+        })
+      }
+      else {
+        alert("비밀번호가 서로 다릅니다.")
+      }
+    }
+    else {
+      alert("입력란을 확인해주세요.")
+    }
+  }
+
+  const singInHandleSubmit = (event) => {
+    event.preventDefault();
+
+    login({
       variables: {
         input: {
-          email: Email,
-          name: Name,
-          password: Password
+          email: Email2,
+          password: Password2
         },
       }
     })
-  
+  }
+
+  const [login] = useMutation(LOGIN, {onCompleted: loginCompleted})
+
+  function loginCompleted(data) {
+    console.log(data)
+    alert(`로그인 성공~`)
   }
 
   const [postRegister] = useMutation(REGISTER, {onCompleted: postRegisterCompleted})
@@ -64,23 +115,21 @@ function Sign() {
   return (
     <div className="container">
       <div className="sign-up-container">
-        <form className="form-container" onSubmit={handleSubmit}>
-          <h1>Sign Up</h1>
-          <Input type="email" placeholder="Enter your email" onChange={emailChangeHandler} value={Email} />
-          <Input type="text" placeholder="Enter your name" onChange={nameChangeHandler} value={Name} />
-          <Input type="password" placeholder="Enter your password" onChange={passwordChangeHandler} value={Password} />
-          <Input type="password" placeholder="Enter your password"  onChange={rePasswordChangeHandler} value={RePassword}/>
+        <form className="form-container" onSubmit={singUpHandleSubmit}>
+          <h1>회원가입</h1>
+          <Input type="email" placeholder="이메일을 입력해주세요" onChange={emailChangeHandler} value={Email} />
+          <Input type="text" placeholder="닉네임을 입력해주세요" onChange={nameChangeHandler} value={Name} />
+          <Input type="password" placeholder="비밀번호를 입력해주세요" onChange={passwordChangeHandler} value={Password} />
+          <Input type="password" placeholder="비밀번호를 다시 입력해주세요"  onChange={rePasswordChangeHandler} value={RePassword}/>
           <Button text="가입" />
         </form>
       </div>
       <div className="sign-in-container">
-        <form className="form-container">
-          <h1>Sign In</h1>
-          <Input type="email" placeholder="Enter your email" />
-          <Input type="password" placeholder="Enter your password" />
-          <Link to='/home'>
+        <form className="form-container" onSubmit={singInHandleSubmit}>
+          <h1>로그인</h1>
+          <Input type="email" placeholder="이메일을 입력해주세요" onChange={email2ChangeHandler} value={Email2} />
+          <Input type="password" placeholder="비밀번호를 입력해주세요" onChange={password2ChangeHandler} value={Password2}/>
           <Button text="입장" />
-          </Link>
         </form>
       </div>
       <div className={Click ? "overlay-container active" : "overlay-container"}>
@@ -91,18 +140,18 @@ function Sign() {
           </p>
             {Click ? (
               <div className="overlay-btn">
-                <p style={{marginBottom: '10px', marginTop: '-10px'}}>아직 아이디가 없으신가요?</p>
+                <p style={{marginBottom: '10px', marginTop: '-10px'}}>이미 아이디가 있으신가요?</p>
               <Button
-                text="회원가입"
+                text="로그인"
                 onClick={handleClick}
                 buttonStyle="btn-outline"
               />
               </div>
             ) : (
               <div className="overlay-btn">
-                <p style={{marginBottom: '10px', marginTop: '-10px'}}>이미 아이디가 있으신가요?</p>
+                <p style={{marginBottom: '10px', marginTop: '-10px'}}>아직 아이디가 없으신가요?</p>
               <Button
-                text="로그인"
+                text="회원가입"
                 onClick={handleClick}
                 buttonStyle="btn-outline"
               />
