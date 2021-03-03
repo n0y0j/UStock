@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { gql } = require("apollo-server");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 const userSchema = mongoose.Schema({
@@ -23,6 +23,25 @@ const userSchema = mongoose.Schema({
   },
 });
 
+userSchema.pre("save", function (next) {
+  var user = this;
+
+  bcrypt.genSalt(saltRounds, function (err, salt) {
+    if (err) return next(err);
+
+    bcrypt.hash(user.password, salt, function (err, hash) {
+      if (err) return next(err);
+      user.password = hash;
+      next();
+    });
+  });
+});
+
+userSchema.methods.comparePassword = function (plainPassword) {
+  const res = bcrypt.compareSync(plainPassword, this.password);
+  return res;
+};
+
 const User = mongoose.model("User", userSchema);
 
 const typeDefs = gql`
@@ -32,6 +51,11 @@ const typeDefs = gql`
     email: String!
     password: String!
     role: Int
+  }
+  type UserResponse {
+    user: User!
+    message: String!
+    success: Boolean!
   }
   input registerInput {
     name: String!
@@ -57,49 +81,57 @@ const resolvers = {
     },
   },
   Mutation: {
-    register: (parent, args, context, info) => {
-      const newUser = {
-        name: args.input.name,
-        email: args.input.email,
-        password: args.input.password,
+    register: async (parent, args, context, info) => {
+      var checkValue = {
+        user: {
+          name: args.input.name,
+          email: args.input.email,
+          password: args.input.password,
+        },
+        message: "",
+        success: false,
       };
 
-      bcrypt.genSalt(saltRounds, function(err, salt) {
-        if (err) console.log(err);
+      const user = new User(checkValue.user);
 
-        bcrypt.hash(args.input.password, salt, function(err, hash) {
-          if (err) console.log(err);
-          args.input.password = hash;
-          
-          User.create(
-            {
-              name: args.input.name,
-              email: args.input.email,
-              password: args.input.password,
-            },
-            function (err, user) {
-              if (err) console.log(err);
-            }
-          );
-        })
-      })
+      try {
+        await user.save();
+        checkValue.success = true;
+        checkValue.message = "회원가입에 성공했습니다."
+      } catch (err) {
+        checkValue.message = "이미 이메일이 존재합니다."
+        checkValue.success = false;
+      }
 
-      return newUser;
+      return checkValue;
     },
-    login: (parent, args, context, info) => {
-      User.findOne({ email: args.input.email }, (err, user) => {
+
+    login: async (parent, args, context, info) => {
+      var checkValue = {
+        user: {
+          email: args.input.email,
+          password: args.input.password,
+        },
+        message: "",
+        success: false,
+      };
+
+      await User.findOne({ email: args.input.email }, async (err, user) => {
         if (!user) {
-          console.log("제공된 이메일에 해당하는 유저가 없습니다.")
+          checkValue.message = "이메일에 해당하는 유저가 없습니다";
+          return err;
         }
+
+        const res = await user.comparePassword(args.input.password);
+        checkValue.success = res;
         
 
-        bcrypt.compare(args.input.password, user.password, function (err, isMatch) {
-          if (err) console.log(err)
-          console.log(isMatch);
-        })
+        if (!res) checkValue.message = "비밀번호를 다시 입력해주세요"
+        else checkValue.message = "로그인에 성공하였습니다"
+      });
 
-      })
-    }
+      return checkValue;
+    },
   },
 };
 

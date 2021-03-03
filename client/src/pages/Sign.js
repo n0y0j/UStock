@@ -3,14 +3,19 @@ import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { Link } from "react-router-dom";
 import { useMutation, gql } from '@apollo/client'
+import { withRouter } from 'react-router-dom';
 import "./Sign.css";
 
 const REGISTER = gql`
   mutation Register($input: registerInput!) {
     register(input: $input) {
-      email
-      name
-      password
+      user {
+        name
+        email
+        password
+      }
+      message
+      success
     }
   }
 `
@@ -18,8 +23,12 @@ const REGISTER = gql`
 const LOGIN = gql`
   mutation Login($input: loginInput!) {
     login(input: $input) {
-      email
-      password
+      user {
+        email
+        password
+      }
+      message
+      success
     }
   }
 `
@@ -101,15 +110,18 @@ function Sign() {
   const [login] = useMutation(LOGIN, {onCompleted: loginCompleted})
 
   function loginCompleted(data) {
-    console.log(data)
-    alert(`로그인 성공~`)
+    alert(data.login.message)
+
+    // if (data.login.success) {
+    //   this.props.history.push('/home')
+    // }
+    
   }
 
   const [postRegister] = useMutation(REGISTER, {onCompleted: postRegisterCompleted})
 
   function postRegisterCompleted(data) {
-    console.log(data)
-    alert(`계정이 생성되었습니다.`)
+    alert(data.register.message)
   }
 
   return (

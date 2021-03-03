@@ -2,8 +2,8 @@ const { gql } = require("apollo-server");
 
 const typeDefs = gql`
     type Mutation {
-        register(input: registerInput): User
-        login(input: loginInput): User
+        register(input: registerInput): UserResponse
+        login(input: loginInput): UserResponse
     }
 `;
 
