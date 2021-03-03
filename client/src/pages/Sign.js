@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
-import { Link } from "react-router-dom";
 import { useMutation, gql } from '@apollo/client'
-import { withRouter } from 'react-router-dom';
 import "./Sign.css";
 
 const REGISTER = gql`
@@ -33,7 +31,7 @@ const LOGIN = gql`
   }
 `
 
-function Sign() {
+function Sign({ history }) {
   const [Click, setClick] = useState(false);
   const [Email, setEmail] = useState("")
   const [Email2, setEmail2] = useState("")
@@ -92,6 +90,11 @@ function Sign() {
     else {
       alert("입력란을 확인해주세요.")
     }
+
+    setEmail("")
+    setName("")
+    setPassword("")
+    setRePassword("")
   }
 
   const singInHandleSubmit = (event) => {
@@ -105,6 +108,9 @@ function Sign() {
         },
       }
     })
+
+    setEmail2("")
+    setPassword2("")
   }
 
   const [login] = useMutation(LOGIN, {onCompleted: loginCompleted})
@@ -112,10 +118,9 @@ function Sign() {
   function loginCompleted(data) {
     alert(data.login.message)
 
-    // if (data.login.success) {
-    //   this.props.history.push('/home')
-    // }
-    
+    if (data.login.success) {
+      history.push('/home')
+    }
   }
 
   const [postRegister] = useMutation(REGISTER, {onCompleted: postRegisterCompleted})

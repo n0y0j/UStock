@@ -1,28 +1,14 @@
-import React from 'react'
-import { useQuery, gql } from '@apollo/client';
+import React from "react";
+import Navbar from "../components/Navbar";
 
-const TEST = gql`
-    query {
-        test 
-    }
-`
+import "./Home.css"
 
 function Home() {
-
-    function GetData() {
-        const { loading, error, data } = useQuery(TEST);
-
-        if (loading) return <p>loading</p>
-        if (error) return <p>error</p>
-
-        return (
-            <p>{data.test}</p>
-        )
-    }
-
-    return (
-            GetData()
-    )
+  return (
+    <>
+        <Navbar />
+    </>
+  );
 }
 
-export default Home
+export default Home;

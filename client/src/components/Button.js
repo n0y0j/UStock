@@ -3,7 +3,7 @@ import "./Button.css";
 
 const STYLES = ["btn-primary", "btn-outline"];
 
-const SIZES = ["btn-medium"];
+const SIZES = ["btn-medium", "btn-small"];
 
 const COLOR = ["primary"];
 

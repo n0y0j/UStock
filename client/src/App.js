@@ -15,8 +15,8 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <Switch>
-          <Route path="/" exact component={Sign} />
-          <Route path="/home" exact component={Home} />
+          <Route path="/" exact component={Home} />
+          <Route path="/home" exact component={Sign} />
         </Switch>
       </Router>
     </ApolloProvider>
