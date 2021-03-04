@@ -44,7 +44,7 @@ h3 {
 .card-subtitle {
     color: grey;
     font-weight: 600;
-    margin-top: -40px;
+    margin-top: -5px;
     font-size: 1.2rem;
 }
 
@@ -56,7 +56,7 @@ h3 {
 
 .check-price {
     display: flex;
-    margin-top: -28px;
+    margin-top: -2px;
     color: red;
     font-weight: 600;
 }

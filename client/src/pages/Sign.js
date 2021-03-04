@@ -133,7 +133,7 @@ function Sign({ history }) {
     <div className="sign-container">
       <div className="sign-up-container">
         <form className="form-container" onSubmit={singUpHandleSubmit}>
-          <h1>회원가입</h1>
+          <h1 className="sign-h1">회원가입</h1>
           <Input type="email" placeholder="이메일을 입력해주세요" onChange={emailChangeHandler} value={Email} />
           <Input type="text" placeholder="닉네임을 입력해주세요" onChange={nameChangeHandler} value={Name} />
           <Input type="password" placeholder="비밀번호를 입력해주세요" onChange={passwordChangeHandler} value={Password} />
@@ -143,7 +143,7 @@ function Sign({ history }) {
       </div>
       <div className="sign-in-container">
         <form className="form-container" onSubmit={singInHandleSubmit}>
-          <h1>로그인</h1>
+          <h1 className="sign-h1">로그인</h1>
           <Input type="email" placeholder="이메일을 입력해주세요" onChange={email2ChangeHandler} value={Email2} />
           <Input type="password" placeholder="비밀번호를 입력해주세요" onChange={password2ChangeHandler} value={Password2}/>
           <Button text="입장" />
