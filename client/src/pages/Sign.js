@@ -130,7 +130,7 @@ function Sign({ history }) {
   }
 
   return (
-    <div className="container">
+    <div className="sign-container">
       <div className="sign-up-container">
         <form className="form-container" onSubmit={singUpHandleSubmit}>
           <h1>회원가입</h1>

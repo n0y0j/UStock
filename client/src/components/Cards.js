@@ -23,7 +23,7 @@ function Cards() {
     },
   };
   return (
-    <div className="container">
+    <div className="cards-container">
       <p style={{fontSize: "2.2rem", fontWeight: "600", color: "#002952"}}>인기 주식</p>
       <Carousel className="card-carousel" responsive={responsive}>
           <CardItem tikr="INUV" name="Inovo, Inc." exchange="AMEX" price="2.0000" priceChange="0.2000" change="+10.12%"/>
