@@ -1,12 +1,15 @@
 import React from "react";
+import Cards from "../components/Cards";
 import Navbar from "../components/Navbar";
 
-import "./Home.css"
+import "./Home.css";
 
 function Home() {
+
   return (
     <>
-        <Navbar />
+      <Navbar />
+      <Cards />
     </>
   );
 }

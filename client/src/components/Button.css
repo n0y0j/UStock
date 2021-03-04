@@ -29,9 +29,8 @@
     font-size: 18px;
 }
 
-/* .primary {
-    background-color: var(--primary);
-    color: #fff;
-    border: none;
-} */
+.btn-small {
+    padding: 4px 40px;
+    font-size: 18px;
+}
 

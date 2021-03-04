@@ -1,0 +1,63 @@
+h1 {
+    color: #000;
+    font-size: 2.8rem;
+} 
+
+h3 {
+    color: grey;
+    font-size: 1.3rem;
+}
+
+.slick-prev {
+    left: 20% !important;
+    z-index: 1;
+}
+
+.slick-next {
+    right: 20% !important;
+    z-index: 1;
+}
+
+.container {
+    width: 100vw;
+    display: flex;
+    flex-flow: column;
+    padding: 60px 80px;
+}
+
+.card-carousel {
+    width: 100%;
+    padding: 10px 20px;
+    margin-top: 20px;
+}
+
+.card-container {
+    width: 380px;
+    display: flex;
+    flex-flow: column;
+    box-shadow: 0 6px 20px rgba(56, 125, 255, 0.17);
+    border-radius: 20px;
+    text-decoration: none;
+    padding: 20px 40px;
+}
+
+.card-subtitle {
+    color: grey;
+    font-weight: 600;
+    margin-top: -40px;
+    font-size: 1.2rem;
+}
+
+.card-price {
+    position: relative;
+    left: 55%;
+    margin-top: -20px;
+}
+
+.check-price {
+    display: flex;
+    margin-top: -28px;
+    color: red;
+    font-weight: 600;
+}
+
