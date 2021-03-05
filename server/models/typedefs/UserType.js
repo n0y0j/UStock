@@ -1,5 +1,5 @@
 const { gql } = require("apollo-server");
-const User = require('../User')
+const { User } = require('../User')
 
 const typeDefs = gql`
   type User {

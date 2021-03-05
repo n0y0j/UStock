@@ -5,9 +5,28 @@ const stockSchema = mongoose.Schema({
     type: String,
     maxlength: 10,
   },
+  name: {
+    type: String,
+    maxlength: 50,
+  },
+  exchange: {
+    type: String,
+    maxlength: 10,
+  },
+  sector: {
+    type: String,
+    maxlength: 50,
+  },
+  price: {
+    type: Number
+  },
+  change: {
+    type: Number
+  },
+  volume: {
+    type: Number
+  }
 });
-
-
 
 const Stock = mongoose.model("Stock", stockSchema);
 

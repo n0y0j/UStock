@@ -2,22 +2,21 @@ const { gql } = require("apollo-server");
 const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
 const finvizor = require("finvizor");
+const { Stock } = require('../Stock')
 
 const typeDefs = gql`
   type Stock {
-    tikr: String
-    name: String
-    exchange: String
-    sector: String
-    price: Float
-    change: Float
-    volume: Float
+    tikr: String!
+    name: String!
+    exchange: String!
+    sector: String!
+    price: Float!
+    change: Float!
+    volume: Float!
   }
 `;
 
 const getStockData = async () => {
-  var stockList = [];
-
   const browser = await puppeteer.launch({
     headless: true,
   });
@@ -35,12 +34,14 @@ const getStockData = async () => {
       const tikr = $(list)
         .find("td > a.external.text")
         .text()
+        .replace('.', '-')
         .replace("reports", "");
 
       if (index > 0) {
+    
         let searchStock = await finvizor.stock(tikr);
-
-        var stock = {
+        
+        await Stock.create({
           tikr: searchStock.ticker,
           name: searchStock.name,
           exchange: searchStock.exchange,
@@ -48,26 +49,20 @@ const getStockData = async () => {
           price: searchStock.price,
           change: searchStock.change,
           volume: searchStock.volume,
-        };
-
-        if (stock.tikr !== null) {
-          stockList.push(stock);
-        }
+        });
       }
     })
   );
 
   browser.close();
-  console.log(stockList.length);
-  return stockList;
+
+  return true
 };
 
 const resolvers = {
   Mutation: {
     searchStock: async (parent, args, context, info) => {
-      const stockList = await getStockData();
-
-      return stockList;
+      return getStockData();
     },
   },
 };
