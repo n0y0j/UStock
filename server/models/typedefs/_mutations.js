@@ -4,6 +4,7 @@ const typeDefs = gql`
     type Mutation {
         register(input: registerInput): UserResponse
         login(input: loginInput): UserResponse
+        searchStock: Boolean
     }
 `;
 

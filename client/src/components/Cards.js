@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import CardItem from "./CardItem";
 import "./Cards.css"
 
 function Cards() {
+
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
