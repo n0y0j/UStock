@@ -9,7 +9,7 @@ function CardItem(props) {
             <h1>{props.tikr}</h1>
             <div className="card-subtitle">
               <p>{props.name}</p>
-              <p>{props.exchange}</p>
+              <p style={{marginTop: "-9%"}}>{props.exchange}</p>
             </div>
           </div>
           <div className="card-price">
