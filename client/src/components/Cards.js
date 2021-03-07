@@ -46,7 +46,7 @@ function Cards() {
             style={{ width: 120 }}
             onChange={handleSelectChange}
           >
-            <Option value="volume">거래량</Option>
+            <Option value="vol">거래량</Option>
             <Option value="up">상승률</Option>
             <Option value="down">하락률</Option>
             <Option value="high">높은 가격</Option>
