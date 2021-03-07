@@ -14,13 +14,13 @@ function Navbar() {
         </Link>
         <ul className="nav-menu">
           <li>
-            <Link className="nav-links">홈</Link>
+            <Link className="nav-links" to="/">홈</Link>
           </li>
           <li>
-            <Link className="nav-links">검색</Link>
+            <Link className="nav-links" to="/">검색</Link>
           </li>
           <li>
-            <Link className="nav-links">프리미엄</Link>
+            <Link className="nav-links" to="/">프리미엄</Link>
           </li>
         </ul>
         <Link to="/sign">

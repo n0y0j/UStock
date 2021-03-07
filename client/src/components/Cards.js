@@ -1,19 +1,67 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Select } from "antd";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import CardItem from "./CardItem";
 import "./Cards.css";
 import "antd/dist/antd.css";
+import { useQuery, gql } from "@apollo/client";
+
+const SEARCH_STOCK = gql`
+  query SearchStock($type: String!) {
+    searchStock(type: $type) {
+      tikr
+      name
+      exchange
+      sector
+      price
+      change
+      volume
+    }
+  }
+`;
 
 function Cards() {
   const [DropText, setDropText] = useState("선택");
+  const [StockData, setStockData] = useState([]);
+
+  const CardItems = () => {
+    const { loading, error } = useQuery(SEARCH_STOCK, {
+      variables: { type: DropText },
+      onCompleted: (data) => {
+        setStockData(data.searchStock);
+      },
+    });
+
+    if (loading) return <p>Loding...</p>;
+    if (error) return <p>Error :(</p>;
+    console.log(StockData);
+
+    return (
+      <Carousel className="card-carousel" responsive={responsive}>
+        {StockData.map(
+          ({ tikr, name, exchange, price, priceChange, change }, index) => {
+            return (
+              <CardItem
+                tikr={tikr}
+                name={name}
+                exchange={exchange}
+                price={price}
+                priceChange={priceChange}
+                change={change}
+                key={index}
+              />
+            );
+          }
+        )}
+      </Carousel>
+    );
+  };
 
   const { Option } = Select;
 
   const handleSelectChange = (event) => {
     setDropText(event);
-    console.log(event);
   };
 
   const responsive = {
@@ -54,96 +102,7 @@ function Cards() {
           </Select>
         </div>
       </div>
-      <Carousel className="card-carousel" responsive={responsive}>
-        <CardItem
-          tikr="INUV"
-          name="Inovo, Inc."
-          exchange="AMEX"
-          price="2.0000"
-          priceChange="0.2000"
-          change="+10.12%"
-        />
-        <CardItem
-          tikr="INUV"
-          name="Inovo, Inc."
-          exchange="AMEX"
-          price="2.0000"
-          priceChange="0.2000"
-          change="+10.12%"
-        />
-        <CardItem
-          tikr="INUV"
-          name="Inovo, Inc."
-          exchange="AMEX"
-          price="2.0000"
-          priceChange="0.2000"
-          change="+10.12%"
-        />
-        <CardItem
-          tikr="INUV"
-          name="Inovo, Inc."
-          exchange="AMEX"
-          price="2.0000"
-          priceChange="0.2000"
-          change="+10.12%"
-        />
-        <CardItem
-          tikr="INUV"
-          name="Inovo, Inc."
-          exchange="AMEX"
-          price="2.0000"
-          priceChange="0.2000"
-          change="+10.12%"
-        />
-        <CardItem
-          tikr="INUV"
-          name="Inovo, Inc."
-          exchange="AMEX"
-          price="2.0000"
-          priceChange="0.2000"
-          change="+10.12%"
-        />
-        <CardItem
-          tikr="INUV"
-          name="Inovo, Inc."
-          exchange="AMEX"
-          price="2.0000"
-          priceChange="0.2000"
-          change="+10.12%"
-        />
-        <CardItem
-          tikr="INUV"
-          name="Inovo, Inc."
-          exchange="AMEX"
-          price="2.0000"
-          priceChange="0.2000"
-          change="+10.12%"
-        />
-        <CardItem
-          tikr="INUV"
-          name="Inovo, Inc."
-          exchange="AMEX"
-          price="2.0000"
-          priceChange="0.2000"
-          change="+10.12%"
-        />
-        <CardItem
-          tikr="INUV"
-          name="Inovo, Inc."
-          exchange="AMEX"
-          price="2.0000"
-          priceChange="0.2000"
-          change="+10.12%"
-        />
-        <CardItem
-          tikr="INUV"
-          name="Inovo, Inc."
-          exchange="AMEX"
-          price="2.0000"
-          priceChange="0.2000"
-          change="+10.12%"
-        />
-      </Carousel>
+      {CardItems()}
     </div>
   );
 }

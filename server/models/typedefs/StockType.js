@@ -91,7 +91,7 @@ const resolvers = {
           break;
       }
 
-      return await Stock.find().sort(type).limit(10);
+      return await Stock.find().sort(type).limit(20);
     },
   }
 };
