@@ -12,6 +12,7 @@ const typeDefs = gql`
     sector: String!
     price: Float!
     change: Float!
+    changePrice: Float!
     volume: Float!
   }
 `;
@@ -38,7 +39,7 @@ const getStockData = async () => {
         .replace("reports", "");
 
       if (index > 0) {
-        let searchStock = await finvizor.stock(tikr);
+        let searchStock = await finvizor.stock(tikr)
 
         await Stock.create({
           tikr: searchStock.ticker,
@@ -47,6 +48,7 @@ const getStockData = async () => {
           sector: searchStock.sector,
           price: searchStock.price,
           change: searchStock.change,
+          changePrice: (searchStock.price - searchStock.prevClose).toFixed(4),
           volume: searchStock.volume,
         });
       }
@@ -93,6 +95,9 @@ const resolvers = {
 
       return await Stock.find().sort(type).limit(20);
     },
+  },
+  Mutation: {
+    getStockData: () => getStockData()
   }
 };
 

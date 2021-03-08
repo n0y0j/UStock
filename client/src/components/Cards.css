@@ -59,8 +59,8 @@ h3 {
 }
 
 .card-price {
-    position: relative;
-    left: 55%;
+    /* position: relative; */
+    text-align: right;
     margin-top: -20%;
 }
 

@@ -23,6 +23,9 @@ const stockSchema = mongoose.Schema({
   change: {
     type: Number
   },
+  changePrice: {
+    type: Number
+  },
   volume: {
     type: Number
   }

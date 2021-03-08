@@ -16,6 +16,7 @@ const SEARCH_STOCK = gql`
       sector
       price
       change
+      changePrice
       volume
     }
   }
@@ -40,14 +41,14 @@ function Cards() {
     return (
       <Carousel className="card-carousel" responsive={responsive}>
         {StockData.map(
-          ({ tikr, name, exchange, price, priceChange, change }, index) => {
+          ({ tikr, name, exchange, price, changePrice, change }, index) => {
             return (
               <CardItem
                 tikr={tikr}
                 name={name}
                 exchange={exchange}
                 price={price}
-                priceChange={priceChange}
+                changePrice={changePrice}
                 change={change}
                 key={index}
               />
