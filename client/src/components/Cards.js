@@ -66,21 +66,27 @@ function Cards() {
   };
 
   const responsive = {
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 2000, min: 1660 },
       items: 4,
-      slidesToSlide: 4, // optional, default to 1.
+      slidesToSlide: 4
+    },
+    desktop: {
+      breakpoint: { max: 1660, min: 1300 },
+      items: 3,
+      slidesToSlide: 3
     },
     tablet: {
-      breakpoint: { max: 1424, min: 200 },
+      breakpoint: { max: 1300, min: 898 },
       items: 2,
-      slidesToSlide: 2, // optional, default to 1.
+      slidesToSlide: 2
     },
     mobile: {
-      breakpoint: { max: 200, min: 0 },
+      breakpoint: { max: 898, min: 0 },
       items: 1,
-      slidesToSlide: 1, // optional, default to 1.
-    },
+      slidesToSlide: 1
+    }
   };
 
   return (

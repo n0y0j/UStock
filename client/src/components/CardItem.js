@@ -6,15 +6,16 @@ function CardItem(props) {
     const priceWidet = (changePrice) => {
       if (changePrice > 0) {
         return (
+          
           <div className="check-price">
               <AiOutlineCaretUp
                 style={{
-                  fontSize: "1rem",
-                  marginTop: "0.2%",
-                  marginRight: "2%",
+                  fontSize: "1.1rem",
+                  marginTop: "-2.5%",
+                  marginRight: "4%",
                 }}
               />
-              <p style={{ marginRight: "2%" }}>{props.changePrice}</p>
+              <p style={{ marginRight: "4%" }}>{props.changePrice}</p>
               <p>{props.change}%</p>
             </div>
         )
@@ -25,12 +26,12 @@ function CardItem(props) {
               <AiOutlineCaretDown
                 style={{
                   fontSize: "1rem",
-                  marginTop: "0.2%",
-                  marginRight: "2%",
+                  marginTop: "-2.5%",
+                  marginRight: "4%",
                   color: 'blue'
                 }}
               />
-              <p style={{ marginRight: "2%", color: 'blue' }}>{props.changePrice}</p>
+              <p style={{ marginRight: "4%", color: 'blue' }}>{props.changePrice}</p>
               <p style={{color: 'blue'}}>{props.change}%</p>
             </div>
         )
@@ -43,12 +44,13 @@ function CardItem(props) {
             <h1>{props.tikr}</h1>
             <div className="card-subtitle">
               <p>{props.name}</p>
-              <p style={{marginTop: "-9%"}}>{props.exchange}</p>
+              <p>{props.exchange}</p>
             </div>
           </div>
           <div className="card-price">
             <h1>{props.price}</h1>
             {priceWidet(props.changePrice)}
+        
           </div>
         </div>
     )

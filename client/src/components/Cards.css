@@ -54,20 +54,24 @@ h3 {
 .card-subtitle {
     color: grey;
     font-weight: 600;
-    margin-top: -12%;
-    font-size: 1.2rem;
+    margin-top: -8%;
+    line-height: 0px;
+    font-size: 1.1rem;
 }
 
 .card-price {
-    /* position: relative; */
     text-align: right;
-    margin-top: -20%;
+    margin-top: 5%;
+    line-height: 0px;
 }
 
 .check-price {
+    font-size: 1.1rem;
     display: flex;
-    margin-top: -10%;
+    position: relative;
+    left: 58%;
     color: red;
     font-weight: 600;
+    margin-top: 10%;
 }
 
