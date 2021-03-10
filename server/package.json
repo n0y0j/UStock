@@ -14,7 +14,10 @@
     "bcrypt": "^5.0.1",
     "cheerio": "^1.0.0-rc.5",
     "finvizor": "^1.0.2",
+    "fs": "0.0.1-security",
     "graphql": "^15.5.0",
+    "graphql-scalars": "^1.9.0",
+    "http": "0.0.1-security",
     "mongoose": "^5.11.18",
     "puppeteer": "^8.0.0"
   }

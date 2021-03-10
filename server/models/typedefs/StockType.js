@@ -3,6 +3,8 @@ const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
 const finvizor = require("finvizor");
 const { Stock } = require("../Stock");
+const https = require('https')
+const fs = require('fs');       
 
 const typeDefs = gql`
   type Stock {
@@ -95,6 +97,17 @@ const resolvers = {
 
       return await Stock.find().sort(type).limit(20);
     },
+    getSnpStock: () => {
+      const url = 'https://query1.finance.yahoo.com/v7/finance/download/ES=F?period1=1583846026&period2=1615382026&interval=1d&events=history&includeAdjustedClose=true'
+      const savepath = "../client/src/components/Chart/data.csv"
+      const outfile = fs.createWriteStream(savepath);
+      
+      var req = https.get(url, function(res) {
+        res.pipe(outfile);
+      });
+
+      return true;
+    }
   },
   Mutation: {
     getStockData: () => getStockData()
