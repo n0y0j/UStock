@@ -13,6 +13,20 @@
     outline: none;
 }
 
+.input-home {
+    font-size: 1.2rem;
+    border-radius: 7px 0 0 7px;
+    padding: 8px 20px;
+}
+
 .primary {
     background-color:#fff;
+}
+
+@media screen and (max-width: 960px) {
+    .input-medium {
+        width: 200px;
+        padding: 8px 20px;
+        font-size: 1rem;
+    }
 }

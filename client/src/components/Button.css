@@ -24,13 +24,30 @@
     transition: all 0.3s ease-out;
 }
 
+.btn-home {
+    background-color: var(--primary);
+    color: #fff;
+    border-radius: 0 7px 7px 0;
+    margin-left: -3px;
+}
+
 .btn-medium {
     padding: 4px 80px;
     font-size: 18px;
 }
 
 .btn-small {
-    padding: 4px 40px;
+    padding: 4px 60px;
     font-size: 18px;
 }
 
+.btn-homesize {
+    font-size: 1.2rem;
+    padding: 10px 30px;
+}
+
+@media screen and (max-width: 960px) {
+    .btn-homesize {
+        font-size: 1rem;
+    }
+}

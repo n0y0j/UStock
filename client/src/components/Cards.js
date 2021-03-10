@@ -92,7 +92,7 @@ function Cards() {
   return (
     <div className="cards-container">
       <div className="cards-title">
-        <p style={{ fontSize: "2.2rem", fontWeight: "600", color: "#002952" }}>
+        <p style={{ fontSize: "2.2rem", fontWeight: "600", color: "#fff" }}>
           인기 주식
         </p>
         <div className="cards-select">

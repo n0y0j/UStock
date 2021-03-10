@@ -1,7 +1,7 @@
 import React from 'react'
 import "./Input.css"
 
-const STYLES = ["input-primary"];
+const STYLES = ["input-primary", "input-home"];
 
 const SIZES = ["input-medium"];
 
