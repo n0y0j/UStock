@@ -44,13 +44,13 @@ function tooltipContent(ys) {
 					value: currentItem.close && numberFormat(currentItem.close)
 				}
 			]
-				.concat(
-					ys.map(each => ({
-						label: each.label,
-						value: each.value(currentItem),
-						stroke: each.stroke
-					}))
-				)
+				// .concat(
+				// 	ys.map(each => ({
+				// 		label: each.label,
+				// 		value: each.value(currentItem),
+				// 		stroke: each.stroke
+				// 	}))
+				// )
 				.filter(line => line.value)
 		};
 	};
@@ -113,11 +113,11 @@ class CandleStickChartWithHoverTooltip extends React.Component {
 		return (
 			<ChartCanvas
 				height={400}
-				width={width}
+				width={900}
 				ratio={ratio}
 				margin={margin}
 				type={type}
-				seriesName="MSFT"
+				seriesName="SnP500"
 				data={data}
 				xScale={xScale}
 				xAccessor={xAccessor}
