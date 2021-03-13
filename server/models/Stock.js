@@ -28,7 +28,8 @@ const stockSchema = mongoose.Schema({
   },
   volume: {
     type: Number
-  }
+  },
+  marketData: []
 });
 
 const Stock = mongoose.model("Stock", stockSchema);
