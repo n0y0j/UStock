@@ -36,7 +36,6 @@ function Cards() {
 
     if (loading) return <p>Loding...</p>;
     if (error) return <p>Error :(</p>;
-    console.log(StockData);
 
     return (
       <Carousel className="card-carousel" responsive={responsive}>

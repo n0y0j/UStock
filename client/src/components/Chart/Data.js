@@ -25,6 +25,6 @@ const parseDate = timeParse("%Y-%m-%d");
 export async function getData() {
   const promiseSnp = await fetch(file)
   const response = await promiseSnp.text()
-  console.log(response)
+  // console.log(response)
   return csvParse(response, parseData(parseDate))
 }

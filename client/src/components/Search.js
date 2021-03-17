@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Button } from "./Button";
 import { Input } from "./Input";
 import "./Search.css";
-import { TypeChooser } from "react-stockcharts/lib/helper";
 import Chart from "../components/Chart/Chart";
 import { getData } from "./Chart/Data"
 

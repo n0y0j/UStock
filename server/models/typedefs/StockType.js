@@ -2,10 +2,8 @@ const { gql } = require("apollo-server");
 const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
 const finvizor = require("finvizor");
-const { Stock } = require("../Stock");
-const https = require("https");
-const fs = require("fs");
-const { getData } = require("./DataFormat");
+const yahooFinance = require('yahoo-finance');
+const { Stock } = require("../Stock");     
 
 const typeDefs = gql`
   type Stock {
@@ -17,34 +15,21 @@ const typeDefs = gql`
     change: Float!
     changePrice: Float!
     volume: Float!
+    marketData: [MarketData]
+  }
+  type MarketData {
+    date: String!
+    open: Int!
+    high: Int!
+    low: Int!
+    close: Int!
+    adjClose: Int!
+    volume: Int!
+    symbol: String!
   }
 `;
 
-const getUrl = async (tikr) => {
-  const browser = await puppeteer.launch({
-    headless: true,
-  });
-
-  const page = await browser.newPage();
-  await page.goto(
-    "https://finance.yahoo.com/quote/" + tikr + "/history?p=" + tikr
-  );
-  const content = await page.content();
-
-  const $ = cheerio.load(content);
-
-  const lists = $(
-    "#Col1-1-HistoricalDataTable-Proxy > section > div > div > span"
-  );
-  const href = $(lists).find("a").attr("href");
-  console.log(href)
-
-  browser.close()
-  return href;
-};
-
 const getStockData = async () => {
-
   const browser = await puppeteer.launch({
     headless: true,
   });
@@ -59,39 +44,43 @@ const getStockData = async () => {
 
   await Promise.all(
     lists.map(async (index, list) => {
-      if (index > 0 && index < 11) {
-        const tikr = $(list)
-          .find("td > a.external.text")
-          .text()
-          .replace(".", "-")
-          .replace("reports", "");
+      const tikr = $(list)
+        .find("td > a.external.text")
+        .text()
+        .replace(".", "-")
+        .replace("reports", "");
 
-        let searchStock = await finvizor.stock(tikr);
-        const url = await getUrl(tikr);
-        const savepath = "./models/typedefs/" + tikr + ".csv";
+      if (index > 0) {
 
-        const outfile = fs.createWriteStream(savepath);
+        let searchStock = await finvizor.stock(tikr)
 
-        var req = https.get(url, function (res) {
-          var stream = res.pipe(outfile);
+        const marketData = await yahooFinance.historical({
+          symbol: tikr,
+          from: '2020-03-16',
+          to: '2021-03-16'
+        })
 
-          stream.on("finish", async function () {
-            await Stock.create({
-              tikr: searchStock.ticker,
-              name: searchStock.name,
-              exchange: searchStock.exchange,
-              sector: searchStock.sector,
-              price: searchStock.price,
-              change: searchStock.change,
-              changePrice: (searchStock.price - searchStock.prevClose).toFixed(
-                4
-              ),
-              volume: searchStock.volume,
-              marketData: await getData(savepath),
-            });
+        await Stock.create({
+          tikr: searchStock.ticker,
+          name: searchStock.name,
+          exchange: searchStock.exchange,
+          sector: searchStock.sector,
+          price: searchStock.price,
+          change: searchStock.change,
+          changePrice: (searchStock.price - searchStock.prevClose).toFixed(4),
+          volume: searchStock.volume,
+          marketData: marketData
+        });
+      } else if (index == 0) {
+        const marketData = await yahooFinance.historical({
+          symbol: "^GSPC",
+          from: '2020-03-17',
+          to: '2021-03-17'
+        })
 
-            fs.unlinkSync(savepath);
-          });
+        await Stock.create({
+          tikr: 'S&P500',
+          marketData: marketData
         });
       }
     })
@@ -135,24 +124,23 @@ const resolvers = {
           break;
       }
 
-      return await Stock.find().sort(type).limit(20);
+      return await Stock.find({tikr: { $ne: "S&P500" }}).sort(type).limit(20)
     },
     getSnpStock: () => {
-      const url =
-        "https://query1.finance.yahoo.com/v7/finance/download/ES=F?period1=1583846026&period2=1615382026&interval=1d&events=history&includeAdjustedClose=true";
-      const savepath = "../client/src/components/Chart/data.csv";
+      const url = 'https://query1.finance.yahoo.com/v7/finance/download/ES=F?period1=1583846026&period2=1615382026&interval=1d&events=history&includeAdjustedClose=true'
+      const savepath = "../client/src/components/Chart/data.csv"
       const outfile = fs.createWriteStream(savepath);
-
-      var req = https.get(url, function (res) {
+      
+      var req = https.get(url, function(res) {
         res.pipe(outfile);
       });
 
       return true;
-    },
+    }
   },
   Mutation: {
-    getStockData: () => getStockData(),
-  },
+    getStockData: () => getStockData()
+  }
 };
 
 module.exports = { typeDefs, resolvers };
