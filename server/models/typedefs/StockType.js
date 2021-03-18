@@ -3,7 +3,8 @@ const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
 const finvizor = require("finvizor");
 const yahooFinance = require('yahoo-finance');
-const { Stock } = require("../Stock");     
+const { Stock } = require("../Stock");
+
 
 const typeDefs = gql`
   type Stock {
@@ -18,15 +19,16 @@ const typeDefs = gql`
     marketData: [MarketData]
   }
   type MarketData {
-    date: String!
-    open: Int!
-    high: Int!
-    low: Int!
-    close: Int!
-    adjClose: Int!
-    volume: Int!
+    date: Date!
+    open: Float!
+    high: Float!
+    low: Float!
+    close: Float!
+    adjClose: Float!
+    volume: Float!
     symbol: String!
   }
+  scalar Date
 `;
 
 const getStockData = async () => {
@@ -66,12 +68,13 @@ const getStockData = async () => {
           exchange: searchStock.exchange,
           sector: searchStock.sector,
           price: searchStock.price,
-          change: searchStock.change,
+          change: (searchStock.change === null) ? 0 : searchStock.change,
           changePrice: (searchStock.price - searchStock.prevClose).toFixed(4),
           volume: searchStock.volume,
           marketData: marketData
         });
       } else if (index == 0) {
+
         const marketData = await yahooFinance.historical({
           symbol: "^GSPC",
           from: '2020-03-17',
@@ -126,16 +129,8 @@ const resolvers = {
 
       return await Stock.find({tikr: { $ne: "S&P500" }}).sort(type).limit(20)
     },
-    getSnpStock: () => {
-      const url = 'https://query1.finance.yahoo.com/v7/finance/download/ES=F?period1=1583846026&period2=1615382026&interval=1d&events=history&includeAdjustedClose=true'
-      const savepath = "../client/src/components/Chart/data.csv"
-      const outfile = fs.createWriteStream(savepath);
-      
-      var req = https.get(url, function(res) {
-        res.pipe(outfile);
-      });
-
-      return true;
+    marketData: async (parent, args, context, info) => {
+      return await Stock.findOne({tikr: args.tikr}, {marketData: true})
     }
   },
   Mutation: {

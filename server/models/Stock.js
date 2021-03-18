@@ -21,7 +21,7 @@ const stockSchema = mongoose.Schema({
     type: Number
   },
   change: {
-    type: Number
+    type: Number,
   },
   changePrice: {
     type: Number
@@ -29,7 +29,32 @@ const stockSchema = mongoose.Schema({
   volume: {
     type: Number
   },
-  marketData: []
+  marketData: [{
+    date: {
+      type: Date
+    },
+    open: {
+      type: Number
+    },
+    high: {
+      type: Number
+    },
+    low: {
+      type: Number
+    },
+    close: {
+      type: Number
+    },
+    adjClose: {
+      type: Number
+    },
+    volume: {
+      type: Number
+    },
+    symbol: {
+      type: String
+    },
+  }]
 });
 
 const Stock = mongoose.model("Stock", stockSchema);

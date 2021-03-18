@@ -44,13 +44,13 @@ function tooltipContent(ys) {
 					value: currentItem.close && numberFormat(currentItem.close)
 				}
 			]
-				// .concat(
-				// 	ys.map(each => ({
-				// 		label: each.label,
-				// 		value: each.value(currentItem),
-				// 		stroke: each.stroke
-				// 	}))
-				// )
+				.concat(
+					ys.map(each => ({
+						label: each.label,
+						value: each.value(currentItem),
+						stroke: each.stroke
+					}))
+				)
 				.filter(line => line.value)
 		};
 	};

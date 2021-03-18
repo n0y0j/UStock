@@ -8,8 +8,6 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "antd": "^4.13.1",
-    "d3-dsv": "^2.0.0",
-    "d3-format": "^2.0.0",
     "d3-time-format": "^3.0.0",
     "graphql": "^15.5.0",
     "prop-types": "^15.7.2",
