@@ -21,7 +21,6 @@ h3 {
 .cards-container {
     background: #002952;
     width: 100vw;
-    height: 50vh;
     display: flex;
     flex-flow: column;
     padding: 50px 70px;

@@ -91,7 +91,12 @@ function Search() {
           buttonSize="btn-homesize"
         />
       </div>
-      <div className="chart-container">{StockChart()}</div>
+      <div className="chart-container">
+        {StockChart()}
+        <div className="chart-title">
+          <p>S&P500</p>
+        </div>
+      </div>
     </div>
   );
 }
