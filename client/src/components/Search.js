@@ -35,29 +35,29 @@ function Search() {
 
   const changeDateParse = (data) => {
     const parseDate = timeParse("%Y-%m-%d");
-    var temp = []
-    var count = data.length - 1
+    var temp = [];
+    var count = data.length - 1;
 
     for (var prop in data) {
-      var year = data[count - prop]["date"].substring(0,4);
-      var month = data[count - prop]["date"].substring(5,7);
-      var date = data[count - prop]["date"].substring(8,10);
+      var year = data[count - prop]["date"].substring(0, 4);
+      var month = data[count - prop]["date"].substring(5, 7);
+      var date = data[count - prop]["date"].substring(8, 10);
 
       const tempData = {
-        "date": parseDate(`${year}-${month}-${date}`),
-        'open': data[count - prop]["open"],
-        'high': data[count - prop]["high"],
-        'low': data[count - prop]["low"],
-        'close': data[count - prop]["close"],
-        'adjClose': data[count - prop]["adjClose"],
-        'volume': data[count - prop]["volume"],
-        'symbol': data[count - prop]["symbol"],
-      }
+        date: parseDate(`${year}-${month}-${date}`),
+        open: data[count - prop]["open"],
+        high: data[count - prop]["high"],
+        low: data[count - prop]["low"],
+        close: data[count - prop]["close"],
+        adjClose: data[count - prop]["adjClose"],
+        volume: data[count - prop]["volume"],
+        symbol: data[count - prop]["symbol"],
+      };
 
-      temp.push(tempData)
+      temp.push(tempData);
     }
-    return temp
-  }
+    return temp;
+  };
 
   const StockChart = () => {
     const { loading, error } = useQuery(MARKET_DATA, {
@@ -69,7 +69,6 @@ function Search() {
 
     if (loading) return <p>Loding...</p>;
     if (error) return <p>Error :(</p>;
-
 
     return <Chart type={"hybrid"} data={Data} />;
   };
@@ -91,10 +90,12 @@ function Search() {
           buttonSize="btn-homesize"
         />
       </div>
-      <div className="chart-container">
-        {StockChart()}
-        <div className="chart-title">
+      <div className="content-container">
+        <div className="chart-container">
+          <div className="chart-title">
           <p>S&P500</p>
+          </div>
+          {StockChart()}
         </div>
       </div>
     </div>

@@ -100,14 +100,16 @@ const getStockData = async () => {
           marketData: marketData,
         });
       } else if (index == 0) {
+
+      //  %5EVIX: 공포지수, ^GSPC: S&P500
         const marketData = await yahooFinance.historical({
-          symbol: "^GSPC",
+          symbol: "%5EVIX",
           from: "2020-03-17",
           to: "2021-03-17",
         });
 
         await Stock.create({
-          tikr: "S&P500",
+          tikr: "VIX",
           marketData: marketData,
         });
       }
