@@ -2,9 +2,8 @@ const { gql } = require("apollo-server");
 const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
 const finvizor = require("finvizor");
-const yahooFinance = require('yahoo-finance');
+const yahooFinance = require("yahoo-finance");
 const { Stock } = require("../Stock");
-
 
 const typeDefs = gql`
   type Stock {
@@ -31,6 +30,34 @@ const typeDefs = gql`
   scalar Date
 `;
 
+// const MHhip = async () => {
+//   const browser = await puppeteer.launch({
+//     headless: true,
+//   });
+
+//   const page = await browser.newPage();
+//   await page.goto("https://finance.yahoo.com/quote/TSLA/history?p=TSLA");
+//   const content = await page.content();
+
+//   const $ = cheerio.load(content);
+
+//   const lists = $(`#Col1-1-HistoricalDataTable-Proxy > section > div`);
+
+//   const test = $(lists).find("table > tbody > tr");
+
+//   test.map((index, item) => {
+//     const MH1 = $(item).find("td:nth-child(0)").text();
+//     const MH2 = $(item).find("td:nth-child(1)").text();
+//     const MH3 = $(item).find("td:nth-child(2)").text();
+//     const MH4 = $(item).find("td:nth-child(3)").text();
+//     const MH5 = $(item).find("td:nth-child(4)").text();
+//     const MH6 = $(item).find("td:nth-child(5)").text();
+//     const MH7 = $(item).find("td:nth-child(6)").text();
+
+//     console.log(`${MH1} ${MH2} ${MH3} ${MH4} ${MH5} ${MH6} ${MH7}\n`)
+//   });
+// };
+
 const getStockData = async () => {
   const browser = await puppeteer.launch({
     headless: true,
@@ -53,14 +80,13 @@ const getStockData = async () => {
         .replace("reports", "");
 
       if (index > 0) {
-
-        let searchStock = await finvizor.stock(tikr)
+        let searchStock = await finvizor.stock(tikr);
 
         const marketData = await yahooFinance.historical({
           symbol: tikr,
-          from: '2020-03-16',
-          to: '2021-03-16'
-        })
+          from: "2020-03-16",
+          to: "2021-03-16",
+        });
 
         await Stock.create({
           tikr: searchStock.ticker,
@@ -68,22 +94,21 @@ const getStockData = async () => {
           exchange: searchStock.exchange,
           sector: searchStock.sector,
           price: searchStock.price,
-          change: (searchStock.change === null) ? 0 : searchStock.change,
+          change: searchStock.change === null ? 0 : searchStock.change,
           changePrice: (searchStock.price - searchStock.prevClose).toFixed(4),
           volume: searchStock.volume,
-          marketData: marketData
+          marketData: marketData,
         });
       } else if (index == 0) {
-
         const marketData = await yahooFinance.historical({
           symbol: "^GSPC",
-          from: '2020-03-17',
-          to: '2021-03-17'
-        })
+          from: "2020-03-17",
+          to: "2021-03-17",
+        });
 
         await Stock.create({
-          tikr: 'S&P500',
-          marketData: marketData
+          tikr: "S&P500",
+          marketData: marketData,
         });
       }
     })
@@ -127,15 +152,17 @@ const resolvers = {
           break;
       }
 
-      return await Stock.find({tikr: { $ne: "S&P500" }}).sort(type).limit(20)
+      return await Stock.find({ tikr: { $ne: "S&P500" } })
+        .sort(type)
+        .limit(20);
     },
     marketData: async (parent, args, context, info) => {
-      return await Stock.findOne({tikr: args.tikr}, {marketData: true})
-    }
+      return await Stock.findOne({ tikr: args.tikr }, { marketData: true });
+    },
   },
   Mutation: {
-    getStockData: () => getStockData()
-  }
+    getStockData: () => getStockData(),
+  },
 };
 
 module.exports = { typeDefs, resolvers };
