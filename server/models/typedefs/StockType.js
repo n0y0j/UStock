@@ -161,6 +161,17 @@ const resolvers = {
     marketData: async (parent, args, context, info) => {
       return await Stock.findOne({ tikr: args.tikr }, { marketData: true });
     },
+    vixData: async () => {
+      const temp = await Stock.findOne({ tikr: "VIX" }, { marketData: true });
+      const vix = temp.marketData;
+
+      var sum = 0;
+      for (var prop in vix) {
+        sum += vix[prop]["close"]
+      }
+      
+      return Math.round(vix[0]["close"] / ( sum / vix.length * 2)  * 100)
+    }
   },
   Mutation: {
     getStockData: () => getStockData(),

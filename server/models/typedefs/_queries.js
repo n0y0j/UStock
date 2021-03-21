@@ -5,6 +5,7 @@ const typeDefs = gql`
         user(id: String): User
         searchStock(type: String): [Stock]
         marketData(tikr: String): Stock
+        vixData: Int
     }
 `
 
