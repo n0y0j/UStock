@@ -5,6 +5,7 @@ import "./Search.css";
 import Chart from "../components/Chart/Chart";
 import { timeParse } from "d3-time-format";
 import { useQuery, gql } from "@apollo/client";
+import VIX from "./Chart/VIX";
 
 const MARKET_DATA = gql`
   query MarketData($tikr: String!) {
@@ -96,6 +97,9 @@ function Search() {
           <p>S&P500</p>
           </div>
           {StockChart()}
+        </div>
+        <div className="vix-container">
+          <VIX />
         </div>
       </div>
     </div>
