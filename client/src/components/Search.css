@@ -16,11 +16,21 @@
 
 .content-container {
     display: flex;
+    width: 100%;
     margin-top: -2%;
     margin-bottom: 1%;
     z-index: 0;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 
+.chart-container {
+    width: 50%;
+}
+
+.vix-container {
+    width: 50%;
+}
 .chart-title {
     position: relative;
     font-size: 1.5rem;
@@ -31,9 +41,23 @@
 }
 
 @media screen and (max-width: 960px) {
+    .content-container {
+        display: inline;
+    }
+
+    .chart-container {
+        width: 100%;
+    }
+    
+    .vix-container {
+        width: 100%;
+    }
+
     .chart-title {
+        position: relative;
         text-align: center;
-        top: 7%;
+        margin-top: 40px;
+        margin-bottom: -50px;
         left: 0%;
         font-size: 2rem;
     }

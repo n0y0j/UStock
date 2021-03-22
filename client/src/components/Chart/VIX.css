@@ -1,9 +1,43 @@
+.container {
+    display: inline;
+}
+
+.status-container {
+    position: relative;
+    top: 15%;
+    height: 100%;
+}
+
+.vix-title {
+    position: relative;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black;
+}
+
+.progrss-container {
+    display: inline;
+    position: relative;
+    top: 10%;
+}
+
+.emoji-container {
+    display: flex;
+}
+
+.emoji-title {
+    display: flex;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #002952;
+}
+
 .progress {
     background-color: #d8d8d8;
     border-radius: 20px;
     margin: 15px 0;
     height: 30px;
-    width: 300px;
+    width: 90%;
 }
 
 .progress-done {
