@@ -113,7 +113,7 @@ class CandleStickChartWithHoverTooltip extends React.Component {
 		return (
 			<ChartCanvas
 				height={400}
-				width={800}
+				width={width}
 				ratio={ratio}
 				margin={margin}
 				type={type}

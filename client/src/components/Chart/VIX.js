@@ -19,6 +19,7 @@ const VIX_DATA = gql`
 function VIX() {
   const [Style, setStyle] = useState({});
   const [State, setState] = useState(0);
+  const [Pos, setPos] = useState([33, 43, 61])
 
   const { loading, error } = useQuery(VIX_DATA, {
     onCompleted: (data) => {
@@ -46,10 +47,11 @@ function VIX() {
           </div>
           <div className="progrss-container">
             <div className="emoji-container">
-                <ReactSVG src={excitement} />
-                <ReactSVG src={blank} style={{position: "relative", left: "33%"}}/>
-                <ReactSVG src={fear} style={{position: "relative", left: "43%"}}/>
-                <ReactSVG src={death} style={{position: "relative", left: "61%"}} />
+                <ReactSVG src={excitement}/>
+                <p></p>
+                <ReactSVG src={blank}/>
+                <ReactSVG src={fear}/>
+                <ReactSVG src={death} />
             </div>
             <div className="progress">
               <div className="progress-done" style={Style}>
@@ -57,10 +59,11 @@ function VIX() {
               </div>
             </div>
             <div className="emoji-title">
-                <p style={{position: "relative", left: "-0.5%"}}>강한 매수</p>
-                <p style={{position: "relative", left: "33.6%"}}>보통</p>
-                <p style={{position: "relative", left: "47%"}}>매도</p>
-                <p style={{position: "relative", left: "66.5%"}}>강한 매도</p>
+                <p>강한 매수</p>
+                <p></p>
+                <p style={{position: "relative", right: "1.5%"}}>보통</p>
+                <p style={{position: "relative", left: "1%"}}>매도</p>
+                <p>강한 매도</p>
             </div>
           </div>
         </div>
