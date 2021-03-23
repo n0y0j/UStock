@@ -171,6 +171,9 @@ const resolvers = {
       }
       
       return Math.round(vix[0]["close"] / ( sum / vix.length * 2)  * 100)
+    },
+    stockData: async (parent, args, context, info) => {
+      return await Stock.findOne({tikr: args.tikr});
     }
   },
   Mutation: {
