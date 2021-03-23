@@ -8,13 +8,6 @@
     height: 100%;
 }
 
-.vix-title {
-    position: relative;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: gray;
-}
-
 .progrss-container {
     display: inline;
     position: relative;

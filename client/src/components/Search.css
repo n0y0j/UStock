@@ -1,65 +1,7 @@
-.main-container {
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
 .search-container {
     width: 100vw;
     display: flex;
     margin-top: 3%;
     align-items: center;
     justify-content: center;
-}
-
-.content-container {
-    display: flex;
-    width: 100%;
-    margin-top: -2%;
-    margin-bottom: 1%;
-    z-index: 0;
-    padding-left: 35px;
-    padding-right: 35px;
-}
-
-.chart-container {
-    width: 50%;
-}
-
-.vix-container {
-    width: 50%;
-}
-.chart-title {
-    position: relative;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: gray;
-    top: 15%;
-    left: 10%;
-}
-
-@media screen and (max-width: 960px) {
-    .content-container {
-        display: inline;
-    }
-
-    .chart-container {
-        width: 100%;
-    }
-    
-    .vix-container {
-        width: 100%;
-    }
-
-    .chart-title {
-        position: relative;
-        text-align: center;
-        margin-top: 40px;
-        margin-bottom: -50px;
-        left: 0%;
-        font-size: 2rem;
-    }
-
 }

@@ -3,10 +3,10 @@ import { useQuery, gql } from "@apollo/client";
 import { ReactSVG } from "react-svg"
 import "./VIX.css";
 
-import excitement from "../../assets/icons/excitement.svg"
-import blank from "../../assets/icons/blank.svg"
-import fear from "../../assets/icons/fear.svg"
-import death from "../../assets/icons/death.svg"
+import excitement from "../assets/icons/excitement.svg"
+import blank from "../assets/icons/blank.svg"
+import fear from "../assets/icons/fear.svg"
+import death from "../assets/icons/death.svg"
 
 
 
@@ -19,7 +19,6 @@ const VIX_DATA = gql`
 function VIX() {
   const [Style, setStyle] = useState({});
   const [State, setState] = useState(0);
-  const [Pos, setPos] = useState([33, 43, 61])
 
   const { loading, error } = useQuery(VIX_DATA, {
     onCompleted: (data) => {
@@ -42,9 +41,6 @@ function VIX() {
     <>
       <div className="container">
         <div className="status-container">
-          <div className="vix-title">
-            <p>공포지수</p>
-          </div>
           <div className="progrss-container">
             <div className="emoji-container">
                 <ReactSVG src={excitement}/>
