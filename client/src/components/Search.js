@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Button } from "./Button";
+import { withRouter } from 'react-router-dom';
 import { Input } from "./Input";
 import "./Search.css";
 
-function Search() {
+function Search({ history }) {
   const [TIKR, setTIKR] = useState("");
 
   const tikrChangeHandler = (event) => {
@@ -12,8 +13,8 @@ function Search() {
 
   const handleClick = (event) => {
     event.preventDefault();
-
-    console.log(TIKR);
+    
+    history.push('/stock', {tikr: TIKR});
   };
 
   return (
@@ -35,4 +36,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default withRouter(Search);
