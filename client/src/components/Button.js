@@ -3,7 +3,7 @@ import "./Button.css";
 
 const STYLES = ["btn-primary", "btn-outline", "btn-home"];
 
-const SIZES = ["btn-medium", "btn-small", "btn-homesize"];
+const SIZES = ["btn-medium", "btn-small", "btn-homesize", "btn-large"];
 
 const COLOR = ["primary"];
 

@@ -37,12 +37,7 @@ function Navbar() {
             </Link>
           </li>
           <li>
-            <Link className="nav-links" to="/">
-              검색
-            </Link>
-          </li>
-          <li>
-            <Link className="nav-links" to="/">
+            <Link className="nav-links" to="/premium">
               프리미엄
             </Link>
           </li>

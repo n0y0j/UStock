@@ -5,6 +5,7 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import Sign from "./pages/Sign";
 import Home from "./pages/Home";
 import Stock from "./pages/Stock";
+import Premium from "./pages/Premium";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000",
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" exact component={Home} />
           <Route path="/sign" exact component={Sign} />
           <Route path="/stock" exact component={Stock} />
+          <Route path="/premium" exact component={Premium} />
         </Switch>
       </Router>
     </ApolloProvider>
