@@ -24,7 +24,7 @@
 }
 
 .premium-card-container:hover {
-    transform: scale(1.04);
+    transform: scale(1.02);
     transition: all 0.3s ease-out;
 }
 
@@ -37,7 +37,7 @@
 
 .premium-card-content h2 {
     color: #fff;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     margin-bottom: 4%;
 }
 

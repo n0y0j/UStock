@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import Search from "../components/Search";
 import "./Home.css";
 import StockChart from "../components/StockChart";
+import Footer from "../components/Footer";
 
 function Home() {
   return (
@@ -26,6 +27,7 @@ function Home() {
         </div>
       </div>
       <Cards />
+      <Footer />
     </div>
   );
 }

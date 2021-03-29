@@ -5,6 +5,7 @@ import { Button } from "../components/Button";
 import { AiFillStar, AiOutlineSearch } from "react-icons/ai";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi"
 import { FaHandshake } from "react-icons/fa"
+import Footer from "../components/Footer";
 
 function Premium() {
   return (
@@ -69,6 +70,7 @@ function Premium() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

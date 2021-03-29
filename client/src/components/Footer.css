@@ -1,0 +1,19 @@
+.footer-container {
+    background-color: #1c2237;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+
+.footer-container h2 {
+    color: #fff;
+    font-size: 1.8rem;
+}
+
+.footer-container a {
+    color: #fff;
+    font-size: 3rem;
+}
