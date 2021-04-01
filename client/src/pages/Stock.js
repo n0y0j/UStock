@@ -1,4 +1,5 @@
 import React from "react";
+import CircleProgress from "../components/CircleProgress";
 import Navbar from "../components/Navbar";
 import Search from "../components/Search";
 import StockChart from "../components/StockChart";
@@ -17,6 +18,7 @@ function Stock(props) {
           </div>
           <StockChart tikr={props.location.state.tikr}/>
         </div>
+          <CircleProgress />
       </div>
     </div>
   );
