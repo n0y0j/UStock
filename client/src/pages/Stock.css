@@ -5,3 +5,45 @@
     align-items: center;
     justify-content: center;
 }
+
+.explain-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3.5%;
+    margin-left: 1%;
+    width: 50vw;
+}
+
+.explain-container h2 {
+    color: #323232;
+    font-size: 2.4rem;
+}
+
+.explain-container p {
+    color: grey;
+    font-size: 1.4rem;
+    margin-top: -3%;
+    
+}
+
+.explain-container h3 {
+    color: #323232;
+    font-size: 1.8rem;
+    margin-bottom: 1.4%;
+}
+
+.explain-price {
+    display: flex;
+}
+
+.explain-price h4 {
+    color: #323232;
+    font-size: 1.8rem;
+}
+
+.explain-price p {
+    color: blue;
+    font-size: 1.5rem;
+    margin-top: 0.5%;
+    margin-left: 1.4%;
+}
