@@ -1,9 +1,19 @@
-.main-container {
-    width: 100vw;
+.stock-content-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    width: 100vw;
+}
+
+.stock-chart-container {
+    padding: 25px 80px;
+}
+
+.body-container {
+    background: #002952;
+    width: 100vw;
+    padding: 40px 80px;
+    display: flex;
+    justify-content: space-around;
 }
 
 .explain-container {
@@ -14,22 +24,15 @@
     width: 50vw;
 }
 
-.explain-container h2 {
+.stock-chart-container h2 {
     color: #323232;
     font-size: 2.4rem;
 }
 
-.explain-container p {
+.stock-chart-container p {
     color: grey;
     font-size: 1.4rem;
-    margin-top: -3%;
-    
-}
-
-.explain-container h3 {
-    color: #323232;
-    font-size: 1.8rem;
-    margin-bottom: 1.4%;
+    margin-top: -1.5%;
 }
 
 .explain-price {

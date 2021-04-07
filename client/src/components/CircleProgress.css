@@ -1,0 +1,28 @@
+.circle-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.circle-container h2 {
+    font-size: 1.5rem;
+    text-align: center;
+    color: white;
+}
+
+.circle-progress {
+    margin-top: 10%;
+}
+
+.circle-progress.ant-progress .ant-progress-text {
+    color: white;
+}
+
+.circle-container p {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 10%;
+    font-weight: 600;
+    color: white;
+}
+
+

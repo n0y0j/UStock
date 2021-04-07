@@ -17,7 +17,7 @@ function Home() {
           <div className="chart-title">
             <p>S&P500</p>
           </div>
-          <StockChart tikr="S&P500"/>
+          <StockChart tikr="S&P500" width={870}/>
         </div>
         <div className="vix-container">
           <div className="vix-title">

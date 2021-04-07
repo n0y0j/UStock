@@ -1,9 +1,15 @@
 import React from "react";
 import { Progress } from 'antd';
+import './CircleProgress.css'
 
-function CircleProgress() {
+function CircleProgress(props) {
+
   return (
-    <Progress type="circle" percent={30} format={() => 'A'} strokeColor={"#242424"} strokeWidth={10} width={200} />
+    <div className="circle-container">
+      <h2>{props.title}</h2>
+      <Progress className='circle-progress' type="circle" percent={80} format={() => 'A'} strokeColor={"#f2709C"} strokeWidth={10} width={180} />
+      <p>{props.value}</p>
+    </div>
   )
 }
 
