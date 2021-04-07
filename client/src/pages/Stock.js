@@ -15,28 +15,30 @@ function Stock(props) {
         <div className="stock-chart-container">
           <h2>Apple Inc.</h2>
           <p>NASD</p>
-          <div className="chart-container">
-            <div className="chart-title">
-              <p>{props.location.state.tikr}</p>
-            </div>
-            <StockChart tikr={props.location.state.tikr} width={1700} />
+          <div className="stock-chart-title">
+            <p>{props.location.state.tikr}</p>
           </div>
+          <StockChart tikr={props.location.state.tikr} />
         </div>
-
-        {/* <div className="explain-price">
-              <h4>가격: 124.76</h4>
-              <p>-0.81</p>
-              <p>0.65%</p>
-            </div> */}
-
-        {/* <CircleProgress /> */}
       </div>
-      <div className="body-container">
-        <CircleProgress title="회사 규모" value="2104.18B" />
-        <CircleProgress title="거래량" value="111,932,640" />
-        <CircleProgress title="직원 수" value="147,000" />
-        <CircleProgress title="수익" value="294.13B" />
-        <CircleProgress title="순수익" value="63.93B" />
+      <div className="stock-body-container">
+        <h2>회사 정보</h2>
+        <div className="stock-body-content-container">
+          <CircleProgress title="회사 규모" value="2104.18B" />
+          <CircleProgress title="거래량" value="111,932,640" />
+          <CircleProgress title="직원 수" value="147,000" />
+          <CircleProgress title="수익" value="294.13B" />
+          <CircleProgress title="순수익" value="63.93B" />
+        </div>
+        <hr />
+        <h2>분석가 평가</h2>
+        <div className="stock-body-content-container">
+          <CircleProgress title="회사 규모" value="2104.18B" />
+          <CircleProgress title="거래량" value="111,932,640" />
+          <CircleProgress title="직원 수" value="147,000" />
+          <CircleProgress title="수익" value="294.13B" />
+          <CircleProgress title="순수익" value="63.93B" />
+        </div>
       </div>
 
       <Footer />

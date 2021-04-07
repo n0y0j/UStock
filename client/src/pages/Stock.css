@@ -8,20 +8,34 @@
     padding: 25px 80px;
 }
 
-.body-container {
+.stock-chart-title {
+    position: relative;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: gray;
+    top: 60px;
+    left: 60px;
+}
+
+.stock-body-container {
+    display: flex;
+    flex-direction: column;
     background: #002952;
     width: 100vw;
     padding: 40px 80px;
-    display: flex;
-    justify-content: space-around;
 }
 
-.explain-container {
+.stock-body-container h2 {
+    color: white;
+    font-size: 2.3rem;
+    text-align: center;
+}
+
+.stock-body-content-container {
     display: flex;
-    flex-direction: column;
-    margin-top: 3.5%;
-    margin-left: 1%;
-    width: 50vw;
+    justify-content: space-around;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .stock-chart-container h2 {
@@ -35,18 +49,10 @@
     margin-top: -1.5%;
 }
 
-.explain-price {
-    display: flex;
+hr {
+    border-color: #C9C7C7;
+    height: 0px;
+    margin-bottom: 50px;
 }
 
-.explain-price h4 {
-    color: #323232;
-    font-size: 1.8rem;
-}
 
-.explain-price p {
-    color: blue;
-    font-size: 1.5rem;
-    margin-top: 0.5%;
-    margin-left: 1.4%;
-}
