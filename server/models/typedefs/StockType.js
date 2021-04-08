@@ -2,8 +2,8 @@ const { gql } = require("apollo-server");
 const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
 const finvizor = require("finvizor");
-const yahooFinance = require("yahoo-finance");
 const { Stock } = require("../Stock");
+const stock = require('@ahang/stock')
 
 const typeDefs = gql`
   type Stock {
@@ -30,35 +30,12 @@ const typeDefs = gql`
   scalar Date
 `;
 
-// const MHhip = async () => {
-//   const browser = await puppeteer.launch({
-//     headless: true,
-//   });
-
-//   const page = await browser.newPage();
-//   await page.goto("https://finance.yahoo.com/quote/TSLA/history?p=TSLA");
-//   const content = await page.content();
-
-//   const $ = cheerio.load(content);
-
-//   const lists = $(`#Col1-1-HistoricalDataTable-Proxy > section > div`);
-
-//   const test = $(lists).find("table > tbody > tr");
-
-//   test.map((index, item) => {
-//     const MH1 = $(item).find("td:nth-child(0)").text();
-//     const MH2 = $(item).find("td:nth-child(1)").text();
-//     const MH3 = $(item).find("td:nth-child(2)").text();
-//     const MH4 = $(item).find("td:nth-child(3)").text();
-//     const MH5 = $(item).find("td:nth-child(4)").text();
-//     const MH6 = $(item).find("td:nth-child(5)").text();
-//     const MH7 = $(item).find("td:nth-child(6)").text();
-
-//     console.log(`${MH1} ${MH2} ${MH3} ${MH4} ${MH5} ${MH6} ${MH7}\n`)
-//   });
-// };
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 const getStockData = async () => {
+
   const browser = await puppeteer.launch({
     headless: true,
   });
@@ -82,36 +59,52 @@ const getStockData = async () => {
       if (index > 0) {
         let searchStock = await finvizor.stock(tikr);
 
-        const marketData = await yahooFinance.historical({
-          symbol: tikr,
-          from: "2020-03-16",
-          to: "2021-03-16",
-        });
+        const marketData = await stock.getHistoricalData(tikr)
+        const earning = await stock.getEarningData(tikr)
+        const revenue = await stock.getRevenueData(tikr)
+        const priceTarget = await stock.getPriceTargetData(tikr)
 
         await Stock.create({
           tikr: searchStock.ticker,
           name: searchStock.name,
           exchange: searchStock.exchange,
           sector: searchStock.sector,
+          marketCap: searchStock.marketCap,
+          income: searchStock.income,
+          sales: searchStock.sales,
+          employees: searchStock.employees,
           price: searchStock.price,
           change: searchStock.change === null ? 0 : searchStock.change,
           changePrice: (searchStock.price - searchStock.prevClose).toFixed(4),
           volume: searchStock.volume,
+          analyst: {
+            earning: earning,
+            revenue: revenue,
+            priceTarget: priceTarget,
+          },
           marketData: marketData,
         });
-      } else if (index == 0) {
+
+        console.log(`${index}번째 데이터 완료~`)
+      }
+
+      else if (index == 0) {
 
       //  %5EVIX: 공포지수, ^GSPC: S&P500
-        const marketData = await yahooFinance.historical({
-          symbol: "%5EVIX",
-          from: "2020-03-17",
-          to: "2021-03-17",
-        });
+        const vixData = await stock.getHistoricalData('%5EVIX')
+        const snpData = await stock.getHistoricalData('^GSPC')
 
         await Stock.create({
           tikr: "VIX",
-          marketData: marketData,
+          marketData: vixData,
         });
+
+        await Stock.create({
+          tikr: "S&P500",
+          marketData: snpData,
+        });
+
+        console.log(`${index}번째 데이터 완료~`)
       }
     })
   );

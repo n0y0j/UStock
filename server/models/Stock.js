@@ -17,6 +17,18 @@ const stockSchema = mongoose.Schema({
     type: String,
     maxlength: 50,
   },
+  marketCap: {
+    type: Number,
+  },
+  income: {
+    type: Number,
+  },
+  sales: {
+    type: Number,
+  },
+  employees: {
+    type: Number,
+  },
   price: {
     type: Number
   },
@@ -29,32 +41,8 @@ const stockSchema = mongoose.Schema({
   volume: {
     type: Number
   },
-  marketData: [{
-    date: {
-      type: Date
-    },
-    open: {
-      type: Number
-    },
-    high: {
-      type: Number
-    },
-    low: {
-      type: Number
-    },
-    close: {
-      type: Number
-    },
-    adjClose: {
-      type: Number
-    },
-    volume: {
-      type: Number
-    },
-    symbol: {
-      type: String
-    },
-  }]
+  analyst: mongoose.Schema.Types.Mixed,
+  marketData: []
 });
 
 const Stock = mongoose.model("Stock", stockSchema);
