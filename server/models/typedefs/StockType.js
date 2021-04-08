@@ -3,7 +3,7 @@ const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
 const finvizor = require("finvizor");
 const { Stock } = require("../Stock");
-const stock = require('@ahang/stock')
+const stock = require("@ahang/stock");
 
 const typeDefs = gql`
   type Stock {
@@ -30,12 +30,7 @@ const typeDefs = gql`
   scalar Date
 `;
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 const getStockData = async () => {
-
   const browser = await puppeteer.launch({
     headless: true,
   });
@@ -48,21 +43,34 @@ const getStockData = async () => {
 
   const lists = $("#constituents > tbody > tr");
 
-  await Promise.all(
-    lists.map(async (index, list) => {
-      const tikr = $(list)
-        .find("td > a.external.text")
-        .text()
-        .replace(".", "-")
-        .replace("reports", "");
+  for (var chunk = 0; chunk < 20; chunk++) {
+    for (var temp = chunk * 5; temp < chunk * 5 + 5; temp++) {
+      if (temp === 0) {
+        const vixData = await stock.getHistoricalData("%5EVIX");
+        const snpData = await stock.getHistoricalData("^GSPC");
 
-      if (index > 0) {
+        await Stock.create({
+          tikr: "VIX",
+          marketData: vixData,
+        });
+
+        await Stock.create({
+          tikr: "S&P500",
+          marketData: snpData,
+        });
+      } else {
+        const tikr = $(lists[temp])
+          .find("td > a.external.text")
+          .text()
+          .replace(",", "-")
+          .replace("reports", "");
+
         let searchStock = await finvizor.stock(tikr);
 
-        const marketData = await stock.getHistoricalData(tikr)
-        const earning = await stock.getEarningData(tikr)
-        const revenue = await stock.getRevenueData(tikr)
-        const priceTarget = await stock.getPriceTargetData(tikr)
+        const marketData = await stock.getHistoricalData(tikr);
+        const earning = await stock.getEarningData(tikr);
+        const revenue = await stock.getRevenueData(tikr);
+        const priceTarget = await stock.getPriceTargetData(tikr);
 
         await Stock.create({
           tikr: searchStock.ticker,
@@ -84,30 +92,72 @@ const getStockData = async () => {
           },
           marketData: marketData,
         });
-
-        console.log(`${index}번째 데이터 완료~`)
       }
 
-      else if (index == 0) {
+      console.log(`${temp}번째 데이터 완료~`);
+    }
+  }
 
-      //  %5EVIX: 공포지수, ^GSPC: S&P500
-        const vixData = await stock.getHistoricalData('%5EVIX')
-        const snpData = await stock.getHistoricalData('^GSPC')
+  // await Promise.all(
+  //   lists.map(async (index, list) => {
+  //     const tikr = $(list)
+  //       .find("td > a.external.text")
+  //       .text()
+  //       .replace(".", "-")
+  //       .replace("reports", "");
 
-        await Stock.create({
-          tikr: "VIX",
-          marketData: vixData,
-        });
+  //     if (index > 0) {
+  //       let searchStock = await finvizor.stock(tikr);
 
-        await Stock.create({
-          tikr: "S&P500",
-          marketData: snpData,
-        });
+  //       const marketData = await stock.getHistoricalData(tikr)
+  //       const earning = await stock.getEarningData(tikr)
+  //       const revenue = await stock.getRevenueData(tikr)
+  //       const priceTarget = await stock.getPriceTargetData(tikr)
 
-        console.log(`${index}번째 데이터 완료~`)
-      }
-    })
-  );
+  //       await Stock.create({
+  //         tikr: searchStock.ticker,
+  //         name: searchStock.name,
+  //         exchange: searchStock.exchange,
+  //         sector: searchStock.sector,
+  //         marketCap: searchStock.marketCap,
+  //         income: searchStock.income,
+  //         sales: searchStock.sales,
+  //         employees: searchStock.employees,
+  //         price: searchStock.price,
+  //         change: searchStock.change === null ? 0 : searchStock.change,
+  //         changePrice: (searchStock.price - searchStock.prevClose).toFixed(4),
+  //         volume: searchStock.volume,
+  //         analyst: {
+  //           earning: earning,
+  //           revenue: revenue,
+  //           priceTarget: priceTarget,
+  //         },
+  //         marketData: marketData,
+  //       });
+
+  //       console.log(`${index}번째 데이터 완료~`)
+  //     }
+
+  //     else if (index == 0) {
+
+  //     //  %5EVIX: 공포지수, ^GSPC: S&P500
+  //       const vixData = await stock.getHistoricalData('%5EVIX')
+  //       const snpData = await stock.getHistoricalData('^GSPC')
+
+  //       await Stock.create({
+  //         tikr: "VIX",
+  //         marketData: vixData,
+  //       });
+
+  //       await Stock.create({
+  //         tikr: "S&P500",
+  //         marketData: snpData,
+  //       });
+
+  //       console.log(`${index}번째 데이터 완료~`)
+  //     }
+  //   })
+  // );
 
   browser.close();
 
@@ -160,14 +210,14 @@ const resolvers = {
 
       var sum = 0;
       for (var prop in vix) {
-        sum += vix[prop]["close"]
+        sum += vix[prop]["close"];
       }
-      
-      return Math.round(vix[0]["close"] / ( sum / vix.length * 2)  * 100)
+
+      return Math.round((vix[0]["close"] / ((sum / vix.length) * 2)) * 100);
     },
     stockData: async (parent, args, context, info) => {
-      return await Stock.findOne({tikr: args.tikr});
-    }
+      return await Stock.findOne({ tikr: args.tikr });
+    },
   },
   Mutation: {
     getStockData: () => getStockData(),
