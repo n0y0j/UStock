@@ -1,9 +1,9 @@
 const { gql } = require("apollo-server");
 const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
-const finvizor = require("finvizor");
 const { Stock } = require("../Stock");
 const stock = require("@ahang/stock");
+const { saveStock, process } = require("./worker");
 
 const typeDefs = gql`
   type Stock {
@@ -43,9 +43,12 @@ const getStockData = async () => {
 
   const lists = $("#constituents > tbody > tr");
 
-  for (var chunk = 0; chunk < 20; chunk++) {
+  for (var chunk = 0; chunk < parseInt(lists.length / 5 + 1); chunk++) {
+    let arrayOfPromises = [];
     for (var temp = chunk * 5; temp < chunk * 5 + 5; temp++) {
-      if (temp === 0) {
+      if (temp > lists.length - 1) break;
+
+      if (temp == 0) {
         const vixData = await stock.getHistoricalData("%5EVIX");
         const snpData = await stock.getHistoricalData("^GSPC");
 
@@ -62,105 +65,19 @@ const getStockData = async () => {
         const tikr = $(lists[temp])
           .find("td > a.external.text")
           .text()
-          .replace(",", "-")
+          .replace(".", "-")
           .replace("reports", "");
 
-        let searchStock = await finvizor.stock(tikr);
+        console.log(`${temp}번째 데이터 ${tikr} 드가자~`);
 
-        const marketData = await stock.getHistoricalData(tikr);
-        const earning = await stock.getEarningData(tikr);
-        const revenue = await stock.getRevenueData(tikr);
-        const priceTarget = await stock.getPriceTargetData(tikr);
+        arrayOfPromises.push(saveStock(tikr));
 
-        await Stock.create({
-          tikr: searchStock.ticker,
-          name: searchStock.name,
-          exchange: searchStock.exchange,
-          sector: searchStock.sector,
-          marketCap: searchStock.marketCap,
-          income: searchStock.income,
-          sales: searchStock.sales,
-          employees: searchStock.employees,
-          price: searchStock.price,
-          change: searchStock.change === null ? 0 : searchStock.change,
-          changePrice: (searchStock.price - searchStock.prevClose).toFixed(4),
-          volume: searchStock.volume,
-          analyst: {
-            earning: earning,
-            revenue: revenue,
-            priceTarget: priceTarget,
-          },
-          marketData: marketData,
-        });
+        if (temp % 5 == 4) await process(arrayOfPromises);
       }
-
-      console.log(`${temp}번째 데이터 완료~`);
     }
+    console.log("===========================================");
   }
-
-  // await Promise.all(
-  //   lists.map(async (index, list) => {
-  //     const tikr = $(list)
-  //       .find("td > a.external.text")
-  //       .text()
-  //       .replace(".", "-")
-  //       .replace("reports", "");
-
-  //     if (index > 0) {
-  //       let searchStock = await finvizor.stock(tikr);
-
-  //       const marketData = await stock.getHistoricalData(tikr)
-  //       const earning = await stock.getEarningData(tikr)
-  //       const revenue = await stock.getRevenueData(tikr)
-  //       const priceTarget = await stock.getPriceTargetData(tikr)
-
-  //       await Stock.create({
-  //         tikr: searchStock.ticker,
-  //         name: searchStock.name,
-  //         exchange: searchStock.exchange,
-  //         sector: searchStock.sector,
-  //         marketCap: searchStock.marketCap,
-  //         income: searchStock.income,
-  //         sales: searchStock.sales,
-  //         employees: searchStock.employees,
-  //         price: searchStock.price,
-  //         change: searchStock.change === null ? 0 : searchStock.change,
-  //         changePrice: (searchStock.price - searchStock.prevClose).toFixed(4),
-  //         volume: searchStock.volume,
-  //         analyst: {
-  //           earning: earning,
-  //           revenue: revenue,
-  //           priceTarget: priceTarget,
-  //         },
-  //         marketData: marketData,
-  //       });
-
-  //       console.log(`${index}번째 데이터 완료~`)
-  //     }
-
-  //     else if (index == 0) {
-
-  //     //  %5EVIX: 공포지수, ^GSPC: S&P500
-  //       const vixData = await stock.getHistoricalData('%5EVIX')
-  //       const snpData = await stock.getHistoricalData('^GSPC')
-
-  //       await Stock.create({
-  //         tikr: "VIX",
-  //         marketData: vixData,
-  //       });
-
-  //       await Stock.create({
-  //         tikr: "S&P500",
-  //         marketData: snpData,
-  //       });
-
-  //       console.log(`${index}번째 데이터 완료~`)
-  //     }
-  //   })
-  // );
-
   browser.close();
-
   return true;
 };
 

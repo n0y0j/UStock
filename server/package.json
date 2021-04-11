@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ahang/stock": "^0.0.6",
+    "@ahang/stock": "^0.0.9",
     "apollo-server": "^2.21.0",
     "bcrypt": "^5.0.1",
     "cheerio": "^1.0.0-rc.5",
