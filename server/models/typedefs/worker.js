@@ -13,6 +13,8 @@ const saveStock = async (tikr) => {
   const revenue = await stock.getRevenueData(tikr);
   const priceTarget = await stock.getPriceTargetData(tikr);
 
+  console.log(marketData.length);
+
   await Stock.create({
     tikr: searchStock.ticker,
     name: searchStock.name,
