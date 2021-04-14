@@ -11,10 +11,15 @@ const typeDefs = gql`
     name: String!
     exchange: String!
     sector: String!
+    marketCap: Float!
+    income: Float!
+    sales: Float!
+    employees: Float!
     price: Float!
     change: Float!
     changePrice: Float!
     volume: Float!
+    analyst: JSONObject!
     marketData: [MarketData]
   }
   type MarketData {
@@ -27,7 +32,9 @@ const typeDefs = gql`
     volume: Float!
     symbol: String!
   }
+  
   scalar Date
+  scalar JSONObject
 `;
 
 const getStockData = async () => {
@@ -114,7 +121,7 @@ const resolvers = {
           break;
       }
 
-      return await Stock.find({ tikr: { $ne: "S&P500" } })
+      return await Stock.find({ tikr: { $nin: [ "S&P500", "VIX" ] } })
         .sort(type)
         .limit(20);
     },
