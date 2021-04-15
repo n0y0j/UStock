@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Cards from "../components/Cards";
 import VIX from "../components/VIX";
 import Navbar from "../components/Navbar";

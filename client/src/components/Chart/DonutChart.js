@@ -6,17 +6,17 @@ class Donut extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      number: props.priceTarget.numberOfAnalysts,
-      options: {
-        labels: ["매수", "보유", "매도"],
-      },
-      series: [
-        props.priceTarget.buy,
-        props.priceTarget.hold,
-        props.priceTarget.sell,
-      ],
-    };
+      this.state = {
+        number: props.data.numberOfAnalysts,
+        options: {
+          labels: ["매수", "보유", "매도"],
+        },
+        series: [
+          props.data.buy,
+          props.data.hold,
+          props.data.sell,
+        ],
+      };
   }
 
   render() {

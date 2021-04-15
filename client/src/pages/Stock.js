@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CircleProgress from "../components/CircleProgress";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -30,8 +30,11 @@ const SEARCH_STOCK = gql`
 `;
 
 function Stock(props) {
-
   const [StockInfo, setStockInfo] = useState({});
+
+  useEffect(() => {
+    console.log("hi")
+  }, [])
 
   const ViewStockInfo = () => {
     const { loading, error } = useQuery(SEARCH_STOCK, {
@@ -43,39 +46,40 @@ function Stock(props) {
 
     if (loading) return <p>Loding...</p>;
     if (error) return <p>Error :(</p>;
-    
-    return (
-      <>
-        <div className="stock-chart-container">
-          <h2>{StockInfo.name}</h2>
-          <p>{StockInfo.exchange}</p>
-          <div className="stock-chart-title">
-            <p>{props.location.state.tikr}</p>
+
+      return (
+        <>
+          <div className="stock-chart-container">
+            <h2>{StockInfo.name}</h2>
+            <p>{StockInfo.exchange}</p>
+            <div className="stock-chart-title">
+              <p>{props.location.state.tikr}</p>
+            </div>
+            <StockChart tikr={props.location.state.tikr} />
           </div>
-          <StockChart tikr={props.location.state.tikr} />
-        </div>
-        <div className="stock-body-container">
-          <h2>회사 정보</h2>
-          <h3>테마: {StockInfo.sector}</h3>
-          <div className="stock-body-content-container">
-            <CircleProgress title="회사 규모" value={StockInfo.marketCap} />
-            <CircleProgress title="거래량" value={StockInfo.volume} />
-            <CircleProgress title="직원 수" value={StockInfo.employees} />
-            <CircleProgress title="수익" value={StockInfo.sales} />
-            <CircleProgress title="순수익" value={StockInfo.income} />
-          </div>
-        </div>
-        <div className="stock-body2-container">
-          <h2>분석가 평가</h2>
-          <div className="stock-target-container">
-            <div className="stock-target-chart-container">
-              { StockInfo.hasOwnProperty('analyst') ? <Donut priceTarget={StockInfo.analyst.priceTarget}/> : <h1></h1> }
-              { StockInfo.hasOwnProperty('analyst') ? <Polar priceTarget={StockInfo.analyst.priceTarget}/> : <h1></h1> }
+          <div className="stock-body-container">
+            <h2>회사 정보</h2>
+            <h3>테마: {StockInfo.sector}</h3>
+            <div className="stock-body-content-container">
+              <CircleProgress title="회사 규모" value={StockInfo.marketCap} />
+              <CircleProgress title="거래량" value={StockInfo.volume} />
+              <CircleProgress title="직원 수" value={StockInfo.employees} />
+              <CircleProgress title="수익" value={StockInfo.sales} />
+              <CircleProgress title="순수익" value={StockInfo.income} />
             </div>
           </div>
-        </div>
-      </>
-    );
+          <div className="stock-body2-container">
+            <h2>분석가 평가</h2>
+            <div className="stock-target-container">
+              <div className="stock-target-chart-container">
+                {StockInfo.hasOwnProperty('analyst') && StockInfo.tikr === props.location.state.tikr ? <Donut data={StockInfo.analyst.priceTarget} /> : <></>}
+                {StockInfo.hasOwnProperty('analyst') && StockInfo.tikr === props.location.state.tikr ? <Polar data={StockInfo.analyst.priceTarget} />: <></>}
+              </div>
+            </div>
+          </div>
+        </>
+      );
+  
   };
 
   return (

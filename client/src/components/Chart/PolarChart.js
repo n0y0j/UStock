@@ -11,9 +11,9 @@ class Polar extends Component {
         labels: ["최댓값", "평균값", "최솟값"],
       },
       series: [
-        props.priceTarget.high,
-        props.priceTarget.average,
-        props.priceTarget.low,
+        props.data.high,
+        props.data.average,
+        props.data.low,
       ],
     };
   }
