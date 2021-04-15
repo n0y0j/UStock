@@ -32,6 +32,21 @@
     padding: 40px 80px;
 }
 
+.stock-target-container {
+    padding: 10px 65px;
+}
+
+.stock-target-container h3 {
+    color: #002952;
+    font-size: 1.8rem;
+}
+
+.stock-target-chart-container {
+    position: relative;
+    bottom: 90px;
+    left: 10px;
+}
+
 .stock-body-container h2 {
     color: white;
     font-size: 2.3rem;

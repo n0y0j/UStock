@@ -6,6 +6,7 @@ import Search from "../components/Search";
 import StockChart from "../components/StockChart";
 import { useQuery, gql } from "@apollo/client";
 import "./Stock.css";
+import Donut from "../components/DonutChart";
 
 const SEARCH_STOCK = gql`
   query StockData($type: String!) {
@@ -29,19 +30,19 @@ const SEARCH_STOCK = gql`
 
 function Stock(props) {
 
-  const [StockInfo, setStockInfo] = useState({})
+  const [StockInfo, setStockInfo] = useState({});
 
   const ViewStockInfo = () => {
     const { loading, error } = useQuery(SEARCH_STOCK, {
       variables: { type: props.location.state.tikr },
       onCompleted: (data) => {
-        setStockInfo(data.stockData)
+        setStockInfo(data.stockData);
       },
     });
 
     if (loading) return <p>Loding...</p>;
     if (error) return <p>Error :(</p>;
-
+    
     return (
       <>
         <div className="stock-chart-container">
@@ -65,6 +66,12 @@ function Stock(props) {
         </div>
         <div className="stock-body2-container">
           <h2>분석가 평가</h2>
+          <div className="stock-target-container">
+            <h3>목표 주가</h3>
+            <div className="stock-target-chart-container">
+              { StockInfo.hasOwnProperty('analyst') ? <Donut priceTarget={StockInfo.analyst.priceTarget}/> : <h1>hi</h1> }
+            </div>
+          </div>
         </div>
       </>
     );

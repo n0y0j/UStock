@@ -1,0 +1,25 @@
+.donut {
+    width: 360px;
+    height: 350px;
+}
+
+.donut-title {
+    position: relative;
+    top: 65%;
+    text-align: center;
+}
+
+.donut-title h3 {
+    color: #002952;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.donut-title h4 {
+    position: relative;
+    color: #002952;
+    font-size: 1.5rem;
+    font-weight: 600;
+    bottom: 15px;
+}
+
