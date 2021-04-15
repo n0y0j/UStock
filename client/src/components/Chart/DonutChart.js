@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Chart from "react-apexcharts";
+import Chart from 'react-apexcharts'
 import './DonutChart.css'
 
 class Donut extends Component {
@@ -32,6 +32,7 @@ class Donut extends Component {
           type="donut"
           width="430"
         />
+        <h3>분석가 추천</h3>
       </div>
     );
   }

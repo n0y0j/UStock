@@ -1,6 +1,15 @@
 .donut {
-    width: 360px;
+    position: relative;
+    width: 350px;
     height: 350px;
+    bottom: 117px
+}
+
+.donut h3 {
+    position: relative;
+    color: #002952;
+    font-size: 2rem;
+    text-align: center;
 }
 
 .donut-title {

@@ -6,7 +6,8 @@ import Search from "../components/Search";
 import StockChart from "../components/StockChart";
 import { useQuery, gql } from "@apollo/client";
 import "./Stock.css";
-import Donut from "../components/DonutChart";
+import Donut from "../components/Chart/DonutChart";
+import Polar from "../components/Chart/PolarChart";
 
 const SEARCH_STOCK = gql`
   query StockData($type: String!) {
@@ -67,9 +68,9 @@ function Stock(props) {
         <div className="stock-body2-container">
           <h2>분석가 평가</h2>
           <div className="stock-target-container">
-            <h3>목표 주가</h3>
             <div className="stock-target-chart-container">
-              { StockInfo.hasOwnProperty('analyst') ? <Donut priceTarget={StockInfo.analyst.priceTarget}/> : <h1>hi</h1> }
+              { StockInfo.hasOwnProperty('analyst') ? <Donut priceTarget={StockInfo.analyst.priceTarget}/> : <h1></h1> }
+              { StockInfo.hasOwnProperty('analyst') ? <Polar priceTarget={StockInfo.analyst.priceTarget}/> : <h1></h1> }
             </div>
           </div>
         </div>
