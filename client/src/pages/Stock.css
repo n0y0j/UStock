@@ -86,4 +86,54 @@ hr {
     border-radius: 100px;
 }
 
+@media screen and (max-width: 1300px) {
+    .stock-body2-container {
+        align-items: center;
+    }
+
+    .stock-target-chart-container { 
+        display: inline;
+        
+    }
+
+    .stock-body2-container h2 {
+        font-size: 2.8rem;
+    }
+}
+
+@media screen and (max-width: 960px) {
+    .stock-body-container {
+        align-items: center;
+    }
+
+    .stock-body-content-container {
+        display: inline;
+    }
+
+    .stock-body-container h2 {
+        font-size: 2.8rem;
+    }
+
+    .stock-chart-container h2, p {
+        text-align: center;
+    }
+
+    .stock-chart-container h2 {
+        font-size: 2.8rem;
+    }
+
+    .stock-chart-container p {
+        font-size: 2rem;
+    }
+
+    .stock-chart-title p {
+        text-align: start;
+        font-size: 1.5rem;
+    }
+
+}
+
+
+
+
 
