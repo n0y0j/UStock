@@ -39,7 +39,7 @@
 .stock-target-chart-container {
     display: flex;
     position: relative;
-    justify-content: space-around;
+    justify-content: space-around
 }
 
 .stock-body-container h2 {
@@ -78,9 +78,12 @@
 }
 
 hr {
-    border-color: #C9C7C7;
-    height: 0px;
+    border-color: #002952;
+    background: #002952;
+    height: 8px;
     margin-bottom: 50px;
+    margin-top: 50px;
+    border-radius: 100px;
 }
 
 

@@ -1,0 +1,11 @@
+.column {
+    width: 425px;
+    height: 350px;
+}
+
+.column h3 {
+    position: relative;
+    color: #002952;
+    font-size: 2rem;
+    text-align: center;
+}

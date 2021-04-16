@@ -8,6 +8,7 @@ import { useQuery, gql } from "@apollo/client";
 import "./Stock.css";
 import Donut from "../components/Chart/DonutChart";
 import Polar from "../components/Chart/PolarChart";
+import Column from "../components/Chart/ColumnChart";
 
 const SEARCH_STOCK = gql`
   query StockData($type: String!) {
@@ -31,10 +32,6 @@ const SEARCH_STOCK = gql`
 
 function Stock(props) {
   const [StockInfo, setStockInfo] = useState({});
-
-  useEffect(() => {
-    console.log("hi")
-  }, [])
 
   const ViewStockInfo = () => {
     const { loading, error } = useQuery(SEARCH_STOCK, {
@@ -74,6 +71,12 @@ function Stock(props) {
               <div className="stock-target-chart-container">
                 {StockInfo.hasOwnProperty('analyst') && StockInfo.tikr === props.location.state.tikr ? <Donut data={StockInfo.analyst.priceTarget} /> : <></>}
                 {StockInfo.hasOwnProperty('analyst') && StockInfo.tikr === props.location.state.tikr ? <Polar data={StockInfo.analyst.priceTarget} />: <></>}
+              </div>
+              <hr />
+              <div className="stock-target-chart-container">
+              {StockInfo.hasOwnProperty('analyst') && StockInfo.tikr === props.location.state.tikr ? <Column data={StockInfo.analyst.earning} dataType="earning" /> : <></>}
+              {StockInfo.hasOwnProperty('analyst') && StockInfo.tikr === props.location.state.tikr ? <Column data={StockInfo.analyst.revenue} dataType="revenue" /> : <></>}
+              {StockInfo.hasOwnProperty('analyst') && StockInfo.tikr === props.location.state.tikr ? <Column data={StockInfo.analyst.revenue} dataType="growth" /> : <></>}
               </div>
             </div>
           </div>
