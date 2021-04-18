@@ -1,5 +1,5 @@
 const { gql } = require("apollo-server");
-const { User } = require('../User')
+const { User } = require("../User");
 
 const typeDefs = gql`
   type User {
@@ -29,11 +29,15 @@ const resolvers = {
   Query: {
     user: async (parent, args, context, info) => {
       var temp;
-      await User.findById(args.id, function (err, user) {
-        if (err) return { success: false, err: "block!" };
-        if (!user) return { success: false, err: "user is empty" };
-        temp = user;
-      });
+
+      try {
+        await User.findOne({ email: args.email }, async (err, user) => {
+          temp = user;
+        });
+      } catch (err) {
+        temp = null;
+      }
+
       return temp;
     },
   },
@@ -54,9 +58,9 @@ const resolvers = {
       try {
         await user.save();
         checkValue.success = true;
-        checkValue.message = "회원가입에 성공했습니다."
+        checkValue.message = "회원가입에 성공했습니다.";
       } catch (err) {
-        checkValue.message = "이미 이메일이 존재합니다."
+        checkValue.message = "이미 이메일이 존재합니다.";
         checkValue.success = false;
       }
 
@@ -81,10 +85,9 @@ const resolvers = {
 
         const res = await user.comparePassword(args.input.password);
         checkValue.success = res;
-        
 
-        if (!res) checkValue.message = "비밀번호를 다시 입력해주세요"
-        else checkValue.message = "로그인에 성공하였습니다"
+        if (!res) checkValue.message = "비밀번호를 다시 입력해주세요";
+        else checkValue.message = "로그인에 성공하였습니다";
       });
 
       return checkValue;
@@ -92,4 +95,4 @@ const resolvers = {
   },
 };
 
-module.exports = { typeDefs, resolvers }
+module.exports = { typeDefs, resolvers };

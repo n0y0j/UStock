@@ -105,9 +105,6 @@ function Sign({ history }) {
         },
       },
     });
-
-    setEmail2("");
-    setPassword2("");
   };
 
   const [login] = useMutation(LOGIN, { onCompleted: loginCompleted });
@@ -116,8 +113,11 @@ function Sign({ history }) {
     alert(data.login.message);
 
     if (data.login.success) {
-      history.push("/home");
+      history.push("/", { email: Email2 });
     }
+
+    setEmail2("");
+    setPassword2("");
   }
 
   const [postRegister] = useMutation(REGISTER, {
@@ -196,7 +196,7 @@ function Sign({ history }) {
                 onClick={handleClick}
                 buttonStyle="btn-outline"
               />
-              <Link style={{marginTop: "15px"}} to="/">
+              <Link style={{ marginTop: "15px" }} to="/">
                 <Button text="돌아가기" buttonStyle="btn-outline" />
               </Link>
             </div>
@@ -210,7 +210,7 @@ function Sign({ history }) {
                 onClick={handleClick}
                 buttonStyle="btn-outline"
               />
-              <Link style={{marginTop: "15px"}} to="/">
+              <Link style={{ marginTop: "15px" }} to="/">
                 <Button text="돌아가기" buttonStyle="btn-outline" />
               </Link>
             </div>
