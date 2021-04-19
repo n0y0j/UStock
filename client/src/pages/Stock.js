@@ -41,9 +41,18 @@ function Stock(props) {
       },
     });
 
-    if (loading) return <p>Loding...</p>;
-    if (error) return <p>Error :(</p>;
+    if (loading) return <p></p>;
+    if (error) return <p></p>;
 
+    if (StockInfo === null) {
+      return (
+        <>
+          <div className="stock-error-container">
+            <p>티커를 확인 후 다시 입력해주세요</p>
+          </div>
+        </>
+      );
+    } else {
       return (
         <>
           <div className="stock-chart-container">
@@ -69,20 +78,45 @@ function Stock(props) {
             <h2>분석가 평가</h2>
             <div className="stock-target-container">
               <div className="stock-target-chart-container">
-                {StockInfo.hasOwnProperty('analyst') && StockInfo.tikr === props.location.state.tikr ? <Donut data={StockInfo.analyst.priceTarget} /> : <></>}
-                {StockInfo.hasOwnProperty('analyst') && StockInfo.tikr === props.location.state.tikr ? <Polar data={StockInfo.analyst.priceTarget} />: <></>}
+                {StockInfo.hasOwnProperty("analyst") &&
+                StockInfo.tikr === props.location.state.tikr ? (
+                  <Donut data={StockInfo.analyst.priceTarget} />
+                ) : (
+                  <></>
+                )}
+                {StockInfo.hasOwnProperty("analyst") &&
+                StockInfo.tikr === props.location.state.tikr ? (
+                  <Polar data={StockInfo.analyst.priceTarget} />
+                ) : (
+                  <></>
+                )}
               </div>
               <hr />
               <div className="stock-target-chart-container">
-              {StockInfo.hasOwnProperty('analyst') && StockInfo.tikr === props.location.state.tikr ? <Column data={StockInfo.analyst.earning} dataType="earning" /> : <></>}
-              {StockInfo.hasOwnProperty('analyst') && StockInfo.tikr === props.location.state.tikr ? <Column data={StockInfo.analyst.revenue} dataType="revenue" /> : <></>}
-              {StockInfo.hasOwnProperty('analyst') && StockInfo.tikr === props.location.state.tikr ? <Column data={StockInfo.analyst.revenue} dataType="growth" /> : <></>}
+                {StockInfo.hasOwnProperty("analyst") &&
+                StockInfo.tikr === props.location.state.tikr ? (
+                  <Column data={StockInfo.analyst.earning} dataType="earning" />
+                ) : (
+                  <></>
+                )}
+                {StockInfo.hasOwnProperty("analyst") &&
+                StockInfo.tikr === props.location.state.tikr ? (
+                  <Column data={StockInfo.analyst.revenue} dataType="revenue" />
+                ) : (
+                  <></>
+                )}
+                {StockInfo.hasOwnProperty("analyst") &&
+                StockInfo.tikr === props.location.state.tikr ? (
+                  <Column data={StockInfo.analyst.revenue} dataType="growth" />
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>
         </>
       );
-  
+    }
   };
 
   return (
