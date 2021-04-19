@@ -26,21 +26,6 @@ const typeDefs = gql`
 `;
 
 const resolvers = {
-  Query: {
-    user: async (parent, args, context, info) => {
-      var temp;
-
-      try {
-        await User.findOne({ email: args.email }, async (err, user) => {
-          temp = user;
-        });
-      } catch (err) {
-        temp = null;
-      }
-
-      return temp;
-    },
-  },
   Mutation: {
     register: async (parent, args, context, info) => {
       var checkValue = {
@@ -69,27 +54,31 @@ const resolvers = {
 
     login: async (parent, args, context, info) => {
       var checkValue = {
-        user: {
-          email: args.input.email,
-          password: args.input.password,
-        },
+        user : {},
         message: "",
         success: false,
       };
 
-      await User.findOne({ email: args.input.email }, async (err, user) => {
-        if (!user) {
-          checkValue.message = "이메일에 해당하는 유저가 없습니다";
-          return err;
-        }
-
-        const res = await user.comparePassword(args.input.password);
-        checkValue.success = res;
-
-        if (!res) checkValue.message = "비밀번호를 다시 입력해주세요";
-        else checkValue.message = "로그인에 성공하였습니다";
-      });
-
+      try {
+        await User.findOne({ email: args.input.email }, async (err, user) => {
+          if (!user) {
+            checkValue.message = "이메일에 해당하는 유저가 없습니다";
+            return err;
+          }
+  
+          const res = await user.comparePassword(args.input.password);
+          checkValue.success = res;
+  
+          if (!res) checkValue.message = "비밀번호를 다시 입력해주세요";
+          else {
+            checkValue.message = "로그인에 성공하였습니다";
+            checkValue.user = user;
+          }
+        });
+      } catch (err) {
+        checkValue.message = err;
+      }
+      
       return checkValue;
     },
   },

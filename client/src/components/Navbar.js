@@ -3,11 +3,17 @@ import { Link } from "react-router-dom";
 import { Button } from "./Button";
 import { RiBankFill } from "react-icons/ri";
 import { BiMenu } from "react-icons/bi";
+import { useRecoilState } from 'recoil';
+import { nameState, IDState } from '../models/AuthState';
 import "./Navbar.css";
 
 function Navbar() {
   const [Click, setClick] = useState(false);
   const [ViewButton, setViewButton] = useState(true);
+
+
+  const [ Nickname, setNickname ] = useRecoilState(nameState)
+  const [ ID, setID ] = useRecoilState(IDState)
 
   const handleClick = () => setClick(!Click);
   const closeMobileMenu = () => setClick(false);
@@ -16,6 +22,11 @@ function Navbar() {
     if (window.innerWidth <= 960) setViewButton(false);
     else setViewButton(true);
   };
+
+  const logout = () => {
+    setNickname("")
+    setID("")
+  }
 
   useEffect(() => {
     showButton();
@@ -54,6 +65,7 @@ function Navbar() {
         {!ViewButton ? (
           <BiMenu style={{fontSize: "3rem", color: "#fff"}} onClick={handleClick}/>
         ) : (
+          Nickname === "" ?
           <Link to="/sign">
             <Button
               text="로그인"
@@ -61,6 +73,16 @@ function Navbar() {
               buttonSize="btn-small"
             />
           </Link>
+          :
+          <div className="nickname-container">
+            <h4>{Nickname}님</h4>
+            <Button
+              text="로그아웃"
+              buttonStyle="btn-outline"
+              buttonSize="btn-homesize"
+              onClick={logout}
+            />
+          </div>
         )}
       </div>
     </div>

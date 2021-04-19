@@ -3,6 +3,8 @@ import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { useMutation, gql } from "@apollo/client";
 import { Link } from "react-router-dom";
+import { useRecoilState } from 'recoil';
+import { nameState, IDState } from '../models/AuthState';
 import "./Sign.css";
 
 const REGISTER = gql`
@@ -23,6 +25,8 @@ const LOGIN = gql`
   mutation Login($input: loginInput!) {
     login(input: $input) {
       user {
+        id
+        name
         email
         password
       }
@@ -40,6 +44,10 @@ function Sign({ history }) {
   const [Password, setPassword] = useState("");
   const [Password2, setPassword2] = useState("");
   const [RePassword, setRePassword] = useState("");
+
+  const [Nickname, setNickname] = useRecoilState(nameState);
+  const [ID, setID] = useRecoilState(IDState);
+
 
   const handleClick = () => setClick(!Click);
 
@@ -111,9 +119,13 @@ function Sign({ history }) {
 
   function loginCompleted(data) {
     alert(data.login.message);
+    console.log(data)
+    setNickname(data.login.user.name);
+    setID(data.login.user.id);
+  
 
     if (data.login.success) {
-      history.push("/", { email: Email2 });
+      history.push("/");
     }
 
     setEmail2("");
