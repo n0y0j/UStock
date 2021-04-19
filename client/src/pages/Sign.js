@@ -27,8 +27,6 @@ const LOGIN = gql`
       user {
         id
         name
-        email
-        password
       }
       message
       success
@@ -118,14 +116,15 @@ function Sign({ history }) {
   const [login] = useMutation(LOGIN, { onCompleted: loginCompleted });
 
   function loginCompleted(data) {
-    alert(data.login.message);
-    console.log(data)
     setNickname(data.login.user.name);
     setID(data.login.user.id);
   
-
     if (data.login.success) {
+      alert(data.login.message);
       history.push("/");
+    }
+    else {
+      alert(data.login.message);
     }
 
     setEmail2("");

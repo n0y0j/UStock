@@ -54,31 +54,32 @@ const resolvers = {
 
     login: async (parent, args, context, info) => {
       var checkValue = {
-        user : {},
+        user: {
+          id: "",
+          name: "",
+        },
         message: "",
         success: false,
       };
 
-      try {
-        await User.findOne({ email: args.input.email }, async (err, user) => {
-          if (!user) {
-            checkValue.message = "이메일에 해당하는 유저가 없습니다";
-            return err;
-          }
-  
-          const res = await user.comparePassword(args.input.password);
-          checkValue.success = res;
-  
-          if (!res) checkValue.message = "비밀번호를 다시 입력해주세요";
-          else {
-            checkValue.message = "로그인에 성공하였습니다";
-            checkValue.user = user;
-          }
-        });
-      } catch (err) {
-        checkValue.message = err;
+      const user = await User.findOne({ email: args.input.email });
+      console.log(user);
+
+      if (user !== null) {
+        checkValue.success = await user.comparePassword(args.input.password);
+
+        if (!checkValue.success)
+          checkValue.message = "비밀번호를 다시 입력해주세요";
+        else {
+          checkValue.message = "로그인에 성공하였습니다";
+          checkValue.user = user;
+        }
       }
-      
+      else {
+        checkValue.message = "아이디를 확인해주세요"
+      }
+
+      console.log(checkValue)
       return checkValue;
     },
   },
