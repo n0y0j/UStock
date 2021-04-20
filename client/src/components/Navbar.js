@@ -30,6 +30,8 @@ function Navbar() {
 
   useEffect(() => {
     showButton();
+    window.localStorage.setItem("nickname", Nickname)
+    window.localStorage.setItem("id", ID)
   }, []);
 
   window.addEventListener("resize", showButton);

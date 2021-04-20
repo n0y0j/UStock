@@ -2,11 +2,11 @@ import { atom } from 'recoil';
 
 export const nameState = atom({
     key: 'nameState',
-    default: "",
+    default: window.localStorage.getItem("nickname"),
 })
 
 export const IDState = atom({
     key: 'idState',
-    default: "",
+    default: window.localStorage.getItem("id"),
 })
 
