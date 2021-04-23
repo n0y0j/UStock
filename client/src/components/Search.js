@@ -49,7 +49,7 @@ function Search({ history }) {
   });
 
   const SearchPreview = ({ tikr }) => {
-    return <li>{tikr}</li>;
+    return <li onClick={ () => setTIKR(tikr)}>{tikr}</li>;
   };
 
   return (
