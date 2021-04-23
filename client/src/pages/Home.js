@@ -8,11 +8,12 @@ import StockChart from "../components/StockChart";
 import Footer from "../components/Footer";
 
 function Home() {
-
   return (
     <div className="main-container">
       <Navbar />
-      <Search />
+      <div className="main-search">
+        <Search />
+      </div>
       <div className="content-container">
         <div className="chart-container">
           <div className="chart-title">

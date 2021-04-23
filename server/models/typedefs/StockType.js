@@ -91,39 +91,45 @@ const getStockData = async () => {
 const resolvers = {
   Query: {
     searchStock: async (parent, args, context, info) => {
+      var stock = {};
       var type = {};
 
-      switch (args.type) {
-        case "vol":
-          type = {
-            volume: -1,
-          };
-          break;
-        case "up":
-          type = {
-            change: -1,
-          };
-          break;
-        case "down":
-          type = {
-            change: 1,
-          };
-          break;
-        case "high":
-          type = {
-            price: -1,
-          };
-          break;
-        case "low":
-          type = {
-            price: 1,
-          };
-          break;
+      if (args.tikr) {
+        stock = await Stock.find({ tikr: { $nin: [ "S&P500", "VIX" ] } })
       }
-
-      return await Stock.find({ tikr: { $nin: [ "S&P500", "VIX" ] } })
+      else {
+        switch (args.type) {
+          case "vol":
+            type = {
+              volume: -1,
+            };
+            break;
+          case "up":
+            type = {
+              change: -1,
+            };
+            break;
+          case "down":
+            type = {
+              change: 1,
+            };
+            break;
+          case "high":
+            type = {
+              price: -1,
+            };
+            break;
+          case "low":
+            type = {
+              price: 1,
+            };
+            break;
+        }
+        stock = await Stock.find({ tikr: { $nin: [ "S&P500", "VIX" ] } })
         .sort(type)
         .limit(20);
+      }
+      return stock
     },
     marketData: async (parent, args, context, info) => {
       return await Stock.findOne({ tikr: args.tikr }, { marketData: true });

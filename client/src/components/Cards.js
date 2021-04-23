@@ -8,8 +8,8 @@ import "antd/dist/antd.css";
 import { useQuery, gql } from "@apollo/client";
 
 const SEARCH_STOCK = gql`
-  query SearchStock($type: String!) {
-    searchStock(type: $type) {
+  query SearchStock($type: String!, $tikr: Boolean!) {
+    searchStock(type: $type, tikr: $tikr) {
       tikr
       name
       exchange
@@ -28,14 +28,14 @@ function Cards() {
 
   const CardItems = () => {
     const { loading, error } = useQuery(SEARCH_STOCK, {
-      variables: { type: DropText },
+      variables: { type: DropText, tikr: false },
       onCompleted: (data) => {
         setStockData(data.searchStock);
       },
     });
 
-    if (loading) return <p>Loding...</p>;
-    if (error) return <p>Error :(</p>;
+    if (loading) return <p></p>;
+    if (error) return <p></p>;
 
     return (
       <Carousel className="card-carousel" responsive={responsive}>

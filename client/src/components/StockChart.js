@@ -56,8 +56,8 @@ function StockChart(props) {
           },
         });
     
-        if (loading) return <p>Loding...</p>;
-        if (error) return <p>Error :(</p>;
+        if (loading) return <p></p>;
+        if (error) return <p></p>;
     
         return <Chart type={"hybrid"} data={Data} />;
       };

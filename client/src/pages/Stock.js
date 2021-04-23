@@ -123,7 +123,9 @@ function Stock(props) {
     <>
       <Navbar />
       <div className="stock-content-container">
+        <div className="main-search">
         <Search />
+        </div>
         {ViewStockInfo()}
       </div>
       <Footer />
