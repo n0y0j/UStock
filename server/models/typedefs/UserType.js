@@ -63,7 +63,6 @@ const resolvers = {
       };
 
       const user = await User.findOne({ email: args.input.email });
-      console.log(user);
 
       if (user !== null) {
         checkValue.success = await user.comparePassword(args.input.password);
@@ -78,8 +77,7 @@ const resolvers = {
       else {
         checkValue.message = "아이디를 확인해주세요"
       }
-
-      console.log(checkValue)
+      
       return checkValue;
     },
   },

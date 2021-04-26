@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CircleProgress from "../components/CircleProgress";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -67,11 +67,36 @@ function Stock(props) {
             <h2>회사 정보</h2>
             <h3>테마: {StockInfo.sector}</h3>
             <div className="stock-body-content-container">
-              <CircleProgress title="회사 규모" value={StockInfo.marketCap} />
-              <CircleProgress title="거래량" value={StockInfo.volume} />
-              <CircleProgress title="직원 수" value={StockInfo.employees} />
-              <CircleProgress title="수익" value={StockInfo.sales} />
-              <CircleProgress title="순수익" value={StockInfo.income} />
+              {StockInfo.hasOwnProperty("marketCap") &&
+              StockInfo.tikr === props.location.state.tikr ? (
+                <CircleProgress title="회사 규모" value={StockInfo.marketCap} />
+              ) : (
+                <></>
+              )}
+              {StockInfo.hasOwnProperty("volume") &&
+              StockInfo.tikr === props.location.state.tikr ? (
+                <CircleProgress title="거래량" value={StockInfo.volume} />
+              ) : (
+                <></>
+              )}
+              {StockInfo.hasOwnProperty("employees") &&
+              StockInfo.tikr === props.location.state.tikr ? (
+                <CircleProgress title="직원 수" value={StockInfo.employees} />
+              ) : (
+                <></>
+              )}
+              {StockInfo.hasOwnProperty("sales") &&
+              StockInfo.tikr === props.location.state.tikr ? (
+                <CircleProgress title="수익" value={StockInfo.sales} />
+              ) : (
+                <></>
+              )}
+              {StockInfo.hasOwnProperty("income") &&
+              StockInfo.tikr === props.location.state.tikr ? (
+                <CircleProgress title="순수익" value={StockInfo.income} />
+              ) : (
+                <></>
+              )}
             </div>
           </div>
           <div className="stock-body2-container">
@@ -124,7 +149,7 @@ function Stock(props) {
       <Navbar />
       <div className="stock-content-container">
         <div className="main-search">
-        <Search />
+          <Search />
         </div>
         {ViewStockInfo()}
       </div>

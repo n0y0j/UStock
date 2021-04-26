@@ -44,7 +44,7 @@ function Search({ history }) {
     variables: { type: "", tikr: true },
     onCompleted: (data) => {
       setTikrList(data.searchStock);
-      console.log(TikrList);
+    
     },
   });
 

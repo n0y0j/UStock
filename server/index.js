@@ -8,7 +8,7 @@ const stock = require('./models/typedefs/StockType')
 
 mongoose.connect(config.mongoURI, {
     useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
-}).then(() => console.log('MongoDB Connected...'))
+}).then(() => ('MongoDB Connected...'))
   .catch(err => console.log(err))
 
 const typeDefs = [
