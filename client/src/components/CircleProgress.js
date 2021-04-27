@@ -13,14 +13,14 @@ function CircleProgress(props) {
           else if (props.value > 10000000000) setState({ format: 'B', percent: 80 });
           else if (props.value > 1000000000) setState({ format: 'C', percent: 60 });
           else if (props.value > 100000000) setState({ format: 'D', percent: 40 });
-          else setState({ F: 20 });
+          else setState({ format: 'F', percent: 20 });
           break;
         case "거래량":
           if (props.value > 50000000) setState({ format: 'A', percent: 100 });
           else if (props.value > 10000000) setState({ format: 'B', percent: 80 });
           else if (props.value > 1000000) setState({ format: 'C', percent: 60 });
           else if (props.value > 100000) setState({ format: 'D', percent: 40 });
-          else setState({ F: 20 });
+          else setState({ format: 'F', percent: 20 });
           break;
         case "직원 수":
           if (props.value > 50000) setState({ format: 'A', percent: 100 });
@@ -34,14 +34,14 @@ function CircleProgress(props) {
           else if (props.value > 5000000000) setState({ format: 'B', percent: 80 });
           else if (props.value > 1000000000) setState({ format: 'C', percent: 60 });
           else if (props.value > 100000000) setState({ format: 'D', percent: 40 });
-          else setState({ F: 20 });
+          else setState({ format: 'F', percent: 20 });
           break;
         case "순수익":
           if (props.value > 10000000000) setState({ format: 'A', percent: 100 });
           else if (props.value > 1000000000) setState({ format: 'B', percent: 80 });
           else if (props.value > 100000000) setState({ format: 'C', percent: 60 });
           else if (props.value > 10000000) setState({ format: 'D', percent: 40 });
-          else setState({ F: 20 });
+          else setState({ format: 'F', percent: 20 });
           break;
       }
     }

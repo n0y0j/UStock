@@ -6,6 +6,7 @@ import { AiFillStar, AiOutlineSearch } from "react-icons/ai";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi"
 import { FaHandshake } from "react-icons/fa"
 import Footer from "../components/Footer";
+import Paypal from "../components/Paypal";
 
 function Premium() {
   return (
@@ -62,11 +63,7 @@ function Premium() {
                 </div>
               </div>
             </div>
-            <Button
-              text="결제"
-              buttonStyle="btn-outline"
-              buttonSize="btn-large"
-            />
+            <Paypal />
           </div>
         </div>
       </div>
