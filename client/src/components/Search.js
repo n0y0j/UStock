@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 import { Input } from "./Input";
 import "./Search.css";
 import { useQuery, gql } from "@apollo/client";
-import { render } from "react-dom";
 
 const SEARCH_STOCK = gql`
   query SearchStock($type: String!, $tikr: Boolean!) {
@@ -37,6 +36,7 @@ function Search({ history }) {
 
   const handleClick = (event) => {
     event.preventDefault();
+    setTIKR("")
     history.push("/stock", { tikr: TIKR });
   };
 
@@ -49,7 +49,7 @@ function Search({ history }) {
   });
 
   const SearchPreview = ({ tikr }) => {
-    return <li onClick={ () => setTIKR(tikr)}>{tikr}</li>;
+    return <li onClick={ () => { setTIKR(tikr); setPreview([]) }}>{tikr}</li>;
   };
 
   return (
