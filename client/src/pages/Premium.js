@@ -7,8 +7,13 @@ import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi"
 import { FaHandshake } from "react-icons/fa"
 import Footer from "../components/Footer";
 import Paypal from "../components/Paypal";
+import { useRecoilValue } from 'recoil'
+import { IDState, nameState } from '../models/AuthState'
 
 function Premium() {
+  const name = useRecoilValue(IDState)
+  const id = useRecoilValue(nameState)
+
   return (
     <>
       <Navbar />
@@ -63,7 +68,7 @@ function Premium() {
                 </div>
               </div>
             </div>
-            <Paypal />
+            { name !== "" && id !== "" ? <Paypal name={name} id={id} /> : <p className="premium-card-p">로그인 후 구매할 수 있습니다</p>}
           </div>
         </div>
       </div>

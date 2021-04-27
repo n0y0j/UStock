@@ -71,6 +71,11 @@
     font-size: 1rem;
 }
 
+.premium-card-p {
+    color: #fff;
+    font-size: 1.2rem;
+}
+
 @media screen and (max-width: 960px) {
     .premium-card-features {
         grid-template-columns: 1fr
