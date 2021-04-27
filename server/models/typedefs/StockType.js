@@ -8,18 +8,18 @@ const { saveStock, process } = require("./worker");
 const typeDefs = gql`
   type Stock {
     tikr: String!
-    name: String!
-    exchange: String!
+    name: String
+    exchange: String
     sector: String!
-    marketCap: Float!
-    income: Float!
-    sales: Float!
-    employees: Float!
-    price: Float!
-    change: Float!
-    changePrice: Float!
-    volume: Float!
-    analyst: JSONObject!
+    marketCap: Float
+    income: Float
+    sales: Float
+    employees: Float
+    price: Float
+    change: Float
+    changePrice: Float
+    volume: Float
+    analyst: JSONObject
     marketData: [MarketData]
   }
   type MarketData {

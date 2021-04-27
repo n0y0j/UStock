@@ -9,7 +9,7 @@ class Column extends Component {
     switch (props.dataType) {
       case "earning":
         this.state = {
-            title: "순수익",
+          title: "순수익",
           options: {
             xaxis: {
               categories: ["낮은 추정지", "평균 추정치", "높은 추정치"],
@@ -37,16 +37,16 @@ class Column extends Component {
         break;
       case "revenue":
         this.state = {
-            title: "수익",
+          title: "수익",
           options: {
             xaxis: {
               categories: ["낮은 추정지", "평균 추정치", "높은 추정치"],
             },
             yaxis: {
-                title: {
-                    text: '(단위: B)'
-                }
-            }
+              title: {
+                text: "(단위: B)",
+              },
+            },
           },
           series: [
             {
@@ -70,7 +70,7 @@ class Column extends Component {
         break;
       case "growth":
         this.state = {
-            title: "성장률",
+          title: "성장률",
           options: {
             xaxis: {
               categories: ["낮은 추정지", "평균 추정치", "높은 추정치"],
@@ -79,15 +79,11 @@ class Column extends Component {
           series: [
             {
               name: "올해",
-              data: [
-                props.data.currentYear.salesGrowth,
-              ],
+              data: [props.data.currentYear.salesGrowth],
             },
             {
               name: "내년",
-              data: [
-                props.data.nextYear.salesGrowth,
-              ],
+              data: [props.data.nextYear.salesGrowth],
             },
           ],
         };
@@ -96,17 +92,19 @@ class Column extends Component {
   }
 
   render() {
-    return (
-      <div className="column">
-        <Chart
-          options={this.state.options}
-          series={this.state.series}
-          type="bar"
-          width="430"
-        />
-        <h3>{this.state.title}</h3>
-      </div>
-    );
+    if (this.props.data.currentYear.numberOfAnalysts !== null) {
+      return (
+        <div className="column">
+          <Chart
+            options={this.state.options}
+            series={this.state.series}
+            type="bar"
+            width="430"
+          />
+          <h3>{this.state.title}</h3>
+        </div>
+      );
+    } else return <></>;
   }
 }
 
