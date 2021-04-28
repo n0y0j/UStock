@@ -1,0 +1,18 @@
+version: "3"
+services:
+  client:
+    build: ./client
+    volumes:
+      - "./client:/app"
+      - "/app/node_modules"
+    ports:
+      - "3000:3000"
+    environment:
+    - NODE_ENV=development
+  server:
+    build: ./server
+    volumes: 
+        - "./server:/app"
+        - "/app/node_modules/bcrypt/"
+    ports:
+      - "4000:4000"

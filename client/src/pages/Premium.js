@@ -1,7 +1,6 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import "./Premium.css";
-import { Button } from "../components/Button";
 import { AiFillStar, AiOutlineSearch } from "react-icons/ai";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi"
 import { FaHandshake } from "react-icons/fa"
