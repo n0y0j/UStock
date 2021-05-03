@@ -23,16 +23,16 @@ const typeDefs = gql`
     marketData: [MarketData]
   }
   type MarketData {
-    date: Date!
-    open: Float!
-    high: Float!
-    low: Float!
-    close: Float!
-    adjClose: Float!
-    volume: Float!
-    symbol: String!
+    date: Date
+    open: Float
+    high: Float
+    low: Float
+    close: Float
+    adjClose: Float
+    volume: Float
+    symbol: String
   }
-  
+
   scalar Date
   scalar JSONObject
 `;
@@ -50,7 +50,7 @@ const getStockData = async () => {
 
   const lists = $("#constituents > tbody > tr");
 
-  for (var chunk = 0; chunk < parseInt(lists.length / 5 + 1); chunk++) {
+  for (var chunk = 0; chunk < 1; chunk++) {
     let arrayOfPromises = [];
     for (var temp = chunk * 5; temp < chunk * 5 + 5; temp++) {
       if (temp > lists.length - 1) break;
@@ -95,9 +95,8 @@ const resolvers = {
       var type = {};
 
       if (args.tikr) {
-        stock = await Stock.find({ tikr: { $nin: [ "S&P500", "VIX" ] } })
-      }
-      else {
+        stock = await Stock.find({ tikr: { $nin: ["S&P500", "VIX"] } });
+      } else {
         switch (args.type) {
           case "vol":
             type = {
@@ -125,11 +124,11 @@ const resolvers = {
             };
             break;
         }
-        stock = await Stock.find({ tikr: { $nin: [ "S&P500", "VIX" ] } })
-        .sort(type)
-        .limit(20);
+        stock = await Stock.find({ tikr: { $nin: ["S&P500", "VIX"] } })
+          .sort(type)
+          .limit(20);
       }
-      return stock
+      return stock;
     },
     marketData: async (parent, args, context, info) => {
       return await Stock.findOne({ tikr: args.tikr }, { marketData: true });

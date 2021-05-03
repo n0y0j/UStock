@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React, { useState } from "react";
 import { useQuery, gql } from "@apollo/client";
 import { timeParse } from "d3-time-format";
-import Chart from './Chart/Chart';
+import Chart from "./Chart/Chart";
 
 const MARKET_DATA = gql`
   query MarketData($tikr: String!) {
@@ -19,54 +19,50 @@ const MARKET_DATA = gql`
 `;
 
 function StockChart(props) {
-    const [Data, setData] = useState([]);
+  const [Data, setData] = useState([]);
+  console.log(props)
+  const changeDateParse = (data) => {
+    const parseDate = timeParse("%Y-%m-%d");
+    var temp = [];
+    for (var prop in data) {
+      if (data[prop]["open"] != null) {
+        var year = data[prop]["date"].substring(0, 4);
+        var month = data[prop]["date"].substring(5, 7);
+        var date = data[prop]["date"].substring(8, 10);
 
-    const changeDateParse = (data) => {
-        const parseDate = timeParse("%Y-%m-%d");
-        var temp = [];
-        var count = data.length - 1;
-    
-        for (var prop in data) {
-          var year = data[count - prop]["date"].substring(0, 4);
-          var month = data[count - prop]["date"].substring(5, 7);
-          var date = data[count - prop]["date"].substring(8, 10);
-    
-          const tempData = {
-            date: parseDate(`${year}-${month}-${date}`),
-            open: data[count - prop]["open"],
-            high: data[count - prop]["high"],
-            low: data[count - prop]["low"],
-            close: data[count - prop]["close"],
-            adjClose: data[count - prop]["adjClose"],
-            volume: data[count - prop]["volume"],
-            symbol: data[count - prop]["symbol"],
-          };
-    
-          temp.push(tempData);
-        }
-        return temp;
-      };
-    
+        const tempData = {
+          date: parseDate(`${year}-${month}-${date}`),
+          open: data[prop]["open"],
+          high: data[prop]["high"],
+          low: data[prop]["low"],
+          close: data[prop]["close"],
+          adjClose: data[prop]["adjClose"],
+          volume: data[prop]["volume"],
+          symbol: data[prop]["symbol"],
+        };
 
-    const GetStockChart = () => {
-        const { loading, error } = useQuery(MARKET_DATA, {
-          variables: { tikr: props.tikr },
-          onCompleted: (data) => {
-            setData(changeDateParse(data.marketData.marketData));
-          },
-        });
-    
-        if (loading) return <p></p>;
-        if (error) return <p></p>;
-    
-        return <Chart type={"hybrid"} data={Data} />;
-      };
-    
-    return (
-        <div>
-            {GetStockChart()}
-        </div>
-    )
+        temp.push(tempData);
+      }
+      else continue;
+    }
+    return temp;
+  };
+
+  const GetStockChart = () => {
+    const { loading, error } = useQuery(MARKET_DATA, {
+      variables: { tikr: props.tikr },
+      onCompleted: (data) => {
+        setData(changeDateParse(data.marketData.marketData));
+      },
+    });
+
+    if (loading) return <p></p>;
+    if (error) return <p></p>;
+
+    return <Chart type={"hybrid"} data={Data} />;
+  };
+
+  return <div>{GetStockChart()}</div>;
 }
 
-export default StockChart
+export default StockChart;
