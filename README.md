@@ -3,7 +3,7 @@
 <p align="start">
 <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/></a>&nbsp 
 <img src="https://img.shields.io/badge/GraohQL-E10098?style=flat-square&logo=GraphQL&logoColor=white"/></a>&nbsp 
-<img src="https://img.shields.io/badge/Apollo-311C87?style=flat-square&logo=Apollo GraphQL&logoColor=white"/></a>&nbsp 
+<img src="https://img.shields.io/badge/Apollo-311C87?style=flat-square&logo=Apollo-GraphQL&logoColor=white"/></a>&nbsp 
 <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=Node.js&logoColor=white"/></a>&nbsp 
 <img src="https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=MongoDB&logoColor=white"/></a>&nbsp 
 <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=Docker&logoColor=white"/>
