@@ -2,6 +2,7 @@ import React from 'react'
 import { AiOutlineCaretUp, AiOutlineCaretDown } from "react-icons/ai";
 
 function CardItem(props) {
+  
 
     const priceWidet = (changePrice) => {
       if (changePrice > 0) {
@@ -43,7 +44,7 @@ function CardItem(props) {
           <div className="card-title">
             <h1>{props.tikr}</h1>
             <div className="card-subtitle">
-              <p>{props.name}</p>
+              <p className={props.name.length > 35 ? "long-sub" : ""}>{props.name}</p>
               <p>{props.exchange}</p>
             </div>
           </div>

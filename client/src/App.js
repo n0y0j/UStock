@@ -6,10 +6,9 @@ import Sign from "./pages/Sign";
 import Home from "./pages/Home";
 import Stock from "./pages/Stock";
 import Premium from "./pages/Premium";
-import Navbar from "./components/Navbar";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000",
+  uri: process.env.REACT_APP_SERVER_URL,
   cache: new InMemoryCache(),
 });
 

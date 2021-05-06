@@ -78,15 +78,19 @@ function Sign({ history }) {
 
     if (Email !== "" && Name !== "" && Password !== "" && RePassword !== "") {
       if (Password == RePassword) {
-        postRegister({
-          variables: {
-            input: {
-              email: Email,
-              name: Name,
-              password: Password,
+        if (Password.length > 8) {
+          postRegister({
+            variables: {
+              input: {
+                email: Email,
+                name: Name,
+                password: Password,
+              },
             },
-          },
-        });
+          });
+        } else {
+          alert("비밀번호를 9자 이상으로 설정해주세요.")
+        }
       } else {
         alert("비밀번호가 서로 다릅니다.");
       }

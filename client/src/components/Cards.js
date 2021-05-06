@@ -6,6 +6,7 @@ import CardItem from "./CardItem";
 import "./Cards.css";
 import "antd/dist/antd.css";
 import { useQuery, gql } from "@apollo/client";
+import { nameState } from "../models/AuthState";
 
 const SEARCH_STOCK = gql`
   query SearchStock($type: String!, $tikr: Boolean!) {
@@ -29,7 +30,7 @@ function Cards() {
   const CardItems = () => {
     const { loading, error } = useQuery(SEARCH_STOCK, {
       variables: { type: DropText, tikr: false },
-      onCompleted: (data) => {
+      onCompleted: (data) => {        
         setStockData(data.searchStock);
       },
     });
@@ -44,7 +45,7 @@ function Cards() {
             return (
               <CardItem
                 tikr={tikr}
-                name={name}
+                name= {name}
                 exchange={exchange}
                 price={price}
                 changePrice={changePrice}

@@ -82,6 +82,11 @@ h3 {
     margin-top: 10%;
 }
 
+.long-sub {
+    font-size: 0.9rem;
+    line-height: 4px;
+}
+
 @media screen and (max-width: 960px) {
     .cards-title {
         display: flex;
