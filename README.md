@@ -35,4 +35,5 @@ UStock은 United States와 Stock의 합성어로 S&P500에 속한 주식의 정�
 
 ## Link
 * https://ahang-ustock.netlify.app
+* 접속 후 약 1분 기다려주세요
 
